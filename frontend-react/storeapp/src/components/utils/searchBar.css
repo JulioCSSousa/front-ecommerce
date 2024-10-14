@@ -1,0 +1,39 @@
+.search-container {
+    margin: 20px;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-left: auto;
+
+}
+
+@media (min-width: 768px) {
+    #searchBar:hover {
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+        background-color: #f5f5f5;
+
+    }
+}
+
+@media (max-width: 740px) {
+    #searchBar {
+        margin-left: 20px;
+        display: flex;
+        max-width: 80%;
+        border-radius: 20pc;
+
+    }
+}
+
+
+
+@media (min-width: 1000px) {
+    #searchBar {
+        display: flex;
+        max-width: 80%;
+        margin-left: 4%;
+        border-radius: 20pc;
+
+    }
+}

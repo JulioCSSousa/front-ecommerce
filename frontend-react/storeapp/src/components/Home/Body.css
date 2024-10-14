@@ -1,0 +1,25 @@
+.product-container {
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+
+
+
+}
+
+.product-content{
+    width: 100%;
+    height: 100%;
+
+}
+.search-button:hover {
+
+}
+
+  
+
+
+
+

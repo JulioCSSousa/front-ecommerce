@@ -1,0 +1,29 @@
+@import url('../Home/Body.css');
+.btn-container {
+  display: grid;
+    position: relative;
+    bottom: 150px; 
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out; 
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    justify-content: center;
+    
+  }
+
+  .btn-content{
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+
+@media(min-width: 768px){
+#card-container:hover .btn-container {
+    opacity: 1; /* Torna visível quando passar o mouse */
+    background: none;
+    border-radius: 30px;
+  }
+}

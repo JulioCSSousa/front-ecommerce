@@ -1,0 +1,19 @@
+
+
+*{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.footer-container{
+    margin-top: 20px;
+    display: flex;
+    max-width: 100vw;
+    max-height: 100vh;
+    height: 500px;
+    background-color: black;
+}
+
+
+.footer-container{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
