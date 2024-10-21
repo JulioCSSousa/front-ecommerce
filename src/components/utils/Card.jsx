@@ -4,6 +4,7 @@ import Button from './Button';
 
 export default function ProductCard({ data }) {
   const { name, image, description, price } = data;
+  console.log(image)
 
   return (
     <div className="col-6 col-sm-6 col-md-6 col-lg-3 mb-4" id='card-container'>

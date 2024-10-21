@@ -19,14 +19,14 @@ export default async function fetchProducts(params) {
   return data;
 }
 
-// Definindo um valor para `params`
+
 const params = 'asta';
 
-// Usando a função assíncrona com `await` dentro de uma função assíncrona
+
 (async () => {
   try {
     const products = await fetchProducts(params);
-    console.log(products); // Exibe os produtos no console
+    console.log(products); 
   } catch (error) {
     console.error('Erro ao buscar produtos:', error);
   }
