@@ -3,8 +3,6 @@ import ProductCard from '../utils/Card';
 import './Body.css';
 import '../utils/Card'
 import SearchBar from '../utils/SearchBar'
-import NavBar from '../utils/NavBar';
-
 import { useContext, useEffect, useState } from 'react';
 import Load from '../utils/Load'
 import fetchProducts from '../../api/fetchProducts'
@@ -29,13 +27,15 @@ export default function Body() {
 
   return (
     <>
-      <NavBar />
       <SearchBar />
       <div className="collapse" id="navbarToggleExternalContent" data-bs-theme="dark">
         <div className="bg-dark p-4">
           <h5 className="text-body-emphasis h4">Collapsed content</h5>
           <span className="text-body-secondary">Toggleable via the navbar brand.</span>
         </div>
+      </div>
+      <div className="banner-front">
+        <img src="" alt='' className="front-img" />
       </div>
       <div className="main-center-text" style={{ height: '20vh', paddingTop: '20px', textAlign: 'center' }}>
         <h1 style={{ fontFamily: "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif" }}>

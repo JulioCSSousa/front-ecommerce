@@ -13,7 +13,7 @@ export default function Footer() {
                             Sobre Nós
                         </button>
                     </h2>
-                    <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div id="collapseOne" className="accordion-collapse collapse show   " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                         <div className="accordion-body">
                             <strong><p>
                                 Somos um casal com uma ideia de negócio próprio e sonhos a realizar. Estamos

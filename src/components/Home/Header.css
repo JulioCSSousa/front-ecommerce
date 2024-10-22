@@ -34,6 +34,9 @@ header {
 }
 
 
+#cartOffcanvas{
+    width: 50vw;
+}
 
 @media(max-width: 768px) {
     .label-menu-container{
@@ -77,6 +80,10 @@ header {
         border-radius: 50%;
         opacity: 0.8;
     }   
+
+    #cartOffcanvas{
+        width: 30vw;
+    }
 }
 
 

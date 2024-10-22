@@ -1,19 +1,21 @@
 
-import PropTypes from 'prop-types'; // Opcional: Usar para validação de tipos em componentes de classe ou funcional.
-import './button.css'
+import PropTypes from 'prop-types'; 
+import './Button.css'
+import { BsFillCartPlusFill } from "react-icons/bs";
 
-export default function Button({ text = 'Comprar', onClick, color = 'primary', className = 'btn btn-success', disabled = false }) {
+
+export default function Button({ onClick, text = 'Comprar', disabled = false }) {
+
   return (
     <div className='btn-container'>
       <div className='btn-content'>
-        <button
-          className={`${color} ${className}`} // Usando classes Bootstrap como exemplo
+        <BsFillCartPlusFill 
           onClick={onClick}
           disabled={disabled}
-          style={{ cursor: disabled ? 'not-allowed' : 'pointer' }}
+          style={{ cursor: disabled ? 'not-allowed' : 'pointer', width: '30px', height: '30px', background: 'none'}}
         >
           {text}
-        </button>
+        </BsFillCartPlusFill>
       </div>
     </div>
   );

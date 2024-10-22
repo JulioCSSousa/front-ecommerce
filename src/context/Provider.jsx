@@ -1,26 +1,30 @@
-import { useState} from "react"
-
-import { AppContext } from "./appContext"
-import propTypes from 'prop-types'
-
-// eslint-disable-next-line react/prop-types
-export default function Provider({children}){
+import { useState } from "react";
+import { AppContext } from "./appContext";
+import PropTypes from 'prop-types'; 
 
 
-    const [valueInput, setValueInput] = useState('')
+export default function Provider({ children }) {
+    const [valueInput, setValueInput] = useState('');
+    const [cartItems, setCartItems] = useState([]);
+    const [spanNum, setSpanNum] = useState(1);
 
     const value = {
-        valueInput, setValueInput
-    }
-    return(
-        <>
-        <AppContext.Provider value = {value}>
-        {children}
+        valueInput,
+        setValueInput,
+        cartItems,
+        setCartItems,
+        spanNum, 
+        setSpanNum
+    };
+
+    return (
+        <AppContext.Provider value={value}>
+            {children}
         </AppContext.Provider>
-        </>
-    )
+    );
 }
 
-Provider.prototype = {
-    children: propTypes.any
-}.isRequired
+
+Provider.propTypes = {
+    children: PropTypes.node.isRequired 
+};

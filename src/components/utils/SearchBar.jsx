@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import './searchBar.css'
+import './SearchBar.css'
 import { AppContext } from '../../context/appContext'
 
 
@@ -17,7 +17,6 @@ export default function SearchBar() {
         return searchValue;
 
     }
-
 
     return (
         <>
