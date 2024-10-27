@@ -14,12 +14,12 @@ export default function ProductCard({ data }) {
             const itemExists = prevItems.some(item => item.name === data.name);
             if (!itemExists) {
                 setIsAdded(true);
-                setTimeout(() => setIsAdded(false), 2000); // Reseta o estado após 2 segundos
+                setTimeout(() => setIsAdded(false), 2000); 
                 return [...prevItems, data];
             }
             return prevItems.map(item =>
                 item.name === data.name
-                    ? { ...item, quantity: (item.quantity || 1) + 1 } // Incrementa a quantidade, assumindo que o valor inicial é 1
+                    ? { ...item, quantity: (item.quantity || 1) + 1 } 
                     : item
             );
         });
@@ -57,6 +57,6 @@ ProductCard.propTypes = {
         name: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
+        price: PropTypes.number.isRequired
     }).isRequired,
 };

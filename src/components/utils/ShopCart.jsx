@@ -5,6 +5,7 @@ import { useContext, useState } from 'react';
 import { AppContext } from '../../context/appContext';
 
 export default function CartItem({ data }) {
+    // eslint-disable-next-line react/prop-types
     const { image, name, price, quantity } = data;
     const { setCartItems } = useContext(AppContext);
     const [ setIsAdded ] = useState(false);
@@ -49,7 +50,6 @@ CartItem.propTypes = {
     data: PropTypes.shape({
         name: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        quantity: PropTypes.number.isRequired
+        price: PropTypes.number.isRequired
     }).isRequired,
 };

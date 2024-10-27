@@ -1,15 +1,16 @@
 // Função assíncrona para buscar os produtos
 export default async function fetchProducts(params) {
-  let link = 'https://back-ecommerce-wl58.onrender.com/api/products'
+  let linkprod = 'https://back-ecommerce-wl58.onrender.com/api/products'
+  let linklocal = 'http://localhost:8000/api/products'
   if (params) {
-    const res = await fetch(`${link}?name=${params}`);
+    const res = await fetch(`${linkprod}?name=${params}`);
     if (!res.ok) {
       throw new Error(`Erro na requisição: ${res.status}`);
     }
     return res.json()
   }
 
-  const res = await fetch(`${link}`);
+  const res = await fetch(`${linklocal}`);
 
   if (!res.ok) {
     throw new Error(`Erro na requisição: ${res.status}`);
