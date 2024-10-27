@@ -8,7 +8,8 @@ export default function CartItem({ data }) {
     // eslint-disable-next-line react/prop-types
     const { image, name, price, quantity } = data;
     const { setCartItems } = useContext(AppContext);
-    const [ setIsAdded ] = useState(false);
+    const [isAdded, setIsAdded] = useState(false);
+
 
     const handleRemoveCart = () => {
         setCartItems(prevItems => {
