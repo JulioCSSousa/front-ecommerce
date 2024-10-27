@@ -15,11 +15,11 @@ export default function ProductCard({ data }) {
             if (!itemExists) {
                 setIsAdded(true);
                 setTimeout(() => setIsAdded(false), 2000); 
-                return [...prevItems, data];
+                return [...prevItems,  {...data, quantity: 1}];
             }
             return prevItems.map(item =>
                 item.name === data.name
-                    ? { ...item, quantity: (item.quantity || 1) + 1 } 
+                    ? { ...item, quantity: item.quantity + 1 } 
                     : item
             );
         });
