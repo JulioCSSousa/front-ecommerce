@@ -1,7 +1,7 @@
 
 import CanvaCartShop from '../utils/CanvaShopCart';
 import './Header.css';
-import Logo from '/home/ubuntudev/programming/E-commerce-front/public/images/logo-no-b.gif';
+import Logo from '/images/logo-no-b.gif';
 
 
 export default function Header() {
