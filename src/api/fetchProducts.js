@@ -10,7 +10,7 @@ export default async function fetchProducts(params) {
     return res.json()
   }
 
-  const res = await fetch(`${linklocal}`);
+  const res = await fetch(`${linkprod}`);
 
   if (!res.ok) {
     throw new Error(`Erro na requisição: ${res.status}`);
