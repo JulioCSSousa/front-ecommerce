@@ -10,20 +10,17 @@ import { AppContext } from '../../context/appContext';
 
 export default function Body() {
 
-  const [products,setProducts] = useState([])
-  const {valueInput} = useContext(AppContext);
+  const [products, setProducts] = useState([])
+  const { valueInput } = useContext(AppContext);
 
   const [loading, setLoad] = useState(true)
-  
+
   useEffect(() => {
     fetchProducts(valueInput).then((response) => {
       setProducts(response.data);
       setLoad(false)
     });
   }, [valueInput]);
-
-
-
 
   return (
     <>
@@ -39,7 +36,7 @@ export default function Body() {
       </div>
       <div className="main-center-text" style={{ height: '20vh', paddingTop: '20px', textAlign: 'center' }}>
         <h1 style={{ fontFamily: "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif" }}>
-          Veja produtos selecionados especialmente para você 
+          Veja produtos selecionados especialmente para você
         </h1>
       </div>
       <div className='' style={{ display: 'flex', margin: '20px' }}>
