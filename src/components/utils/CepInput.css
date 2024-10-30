@@ -1,0 +1,12 @@
+.cep-container{
+    display: flex;
+    flex-direction: column;
+}
+
+#input-mask{
+    width: 200px;
+    display: flex;
+    border-radius: 20px;
+    text-align: center;
+
+}

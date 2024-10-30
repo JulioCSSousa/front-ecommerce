@@ -8,6 +8,7 @@ import Load from '../utils/Load'
 import fetchProducts from '../../api/fetchProducts'
 import { AppContext } from '../../context/appContext';
 
+
 export default function Body() {
 
   const [products, setProducts] = useState([])
@@ -43,13 +44,13 @@ export default function Body() {
       </div>
       <div className="body-container">
         <div className="product-container">
-          <div className="product-content row">
+          <div className="product-content">
             {loading ? <Load /> : products.map((product) =>
-              <ProductCard
-                key={product.id}
-                data={{ name: product.name, image: product.image, price: product.price, description: product.description }}
-              />
-            )}
+                <ProductCard
+                  key={product.id}
+                  data={{ name: product.name, image: product.image, price: product.price, description: product.description, linkTo: `/products/${product.id}` }}
+                />
+            )};
           </div>
         </div>
       </div>

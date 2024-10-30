@@ -3,6 +3,9 @@ import './Card.css';
 import Button from './Button';
 import { useContext, useState } from 'react';
 import { AppContext } from '../../context/appContext';
+import { Link as RouterLink } from 'react-router-dom';
+
+
 
 export default function ProductCard({ data }) {
     const { setCartItems } = useContext(AppContext);
@@ -29,9 +32,9 @@ export default function ProductCard({ data }) {
         <div className="col-6 col-sm-6 col-md-6 col-lg-3 mb-4" id='card-container'>
             <div className="product-card">
                 <Button onClick={handleAddCart} text={isAdded ? "Adicionado!" : "Comprar"} />
-                <a href="#">
+                <RouterLink to={data.linkTo} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <img id="img-card" src={data.image} className="card-img" alt={`Imagem de ${data.name}`} />
-                </a>
+                </RouterLink>
                 <div className="card">
                     <div className="card-text">
                         {data.name}
@@ -57,6 +60,7 @@ ProductCard.propTypes = {
         name: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired
+        price: PropTypes.number.isRequired,
+        linkTo: PropTypes.string.isRequired
     }).isRequired,
 };

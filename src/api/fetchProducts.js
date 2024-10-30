@@ -20,15 +20,3 @@ export default async function fetchProducts(params) {
   return data;
 }
 
-
-const params = 'asta';
-
-
-(async () => {
-  try {
-    const products = await fetchProducts(params);
-    console.log(products); 
-  } catch (error) {
-    console.error('Erro ao buscar produtos:', error);
-  }
-})();

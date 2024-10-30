@@ -25,7 +25,7 @@ export default function SearchBar() {
                     <div className="col">
                         <div className="input-group">
                             <input value={searchValue} onChange={({ target }) => setSearchValue(target.value)} type="text" id='searchBar' className="form-control" placeholder="O que deseja encontrar?" />
-                            <button className="btn btn-outline-secondary" type="button" style={{ border: 'none', position: 'relative' }}>
+                            <button className="btn btn-outline-secondary" id="search-btn" type="button" style={{ border: 'none', position: 'relative' }}>
                                 <i className="fas fa-search"></i>
                             </button>
                         </div>

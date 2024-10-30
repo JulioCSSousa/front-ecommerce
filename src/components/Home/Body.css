@@ -6,14 +6,17 @@
     margin-top: 40px;
 
 
-
 }
+
 
 .product-content{
-    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
     height: 100%;
+    width: 100%;
 
 }
+
 .search-button:hover {
 
 }

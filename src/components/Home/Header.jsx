@@ -25,7 +25,7 @@ export default function Header() {
                         <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div className="offcanvas-body">
-                        Content for the offcanvas goes here.
+                        
                     </div>
                 </div>
                 <section>
