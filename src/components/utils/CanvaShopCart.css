@@ -21,3 +21,11 @@
     width: 200px;
     height: 50px;
 }
+
+.cart-span-num{
+    display: contents;
+}
+
+.spanNum{
+    color: rgb(218, 28, 28);
+}

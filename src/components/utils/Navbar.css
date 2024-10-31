@@ -1,0 +1,39 @@
+.nav{
+    width: 100vw;
+    background-color: black;
+    
+
+}
+
+@media(min-width: 768px){
+.list{
+    display: flex;
+    width: 100vw;
+    margin-top: 10px;
+    background: none;
+    list-style: none;
+    justify-content: center;
+
+}
+}
+
+@media(max-width: 768px){
+    .list{
+        display: none;
+    
+    }
+    }
+
+.item-list{
+    
+    background: none;
+    margin-right: 30px;
+    text-decoration: none;
+    
+}
+
+.item-list label{
+    background: none;
+    font-size: small;
+    color: white;
+}

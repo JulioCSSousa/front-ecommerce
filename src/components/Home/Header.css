@@ -1,23 +1,16 @@
 header {
-    padding: 5px;
-    height: 10vh;
+    padding: 30px;
+    height: 15vh;
     width: 100vw;
     display: grid;
     grid-template-columns: 4fr 1fr 1fr;
     justify-content: center;
 
+
 }
 
 
-.header-content {
-    width: 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    
-    
-}
-
-.img-content {
+.logo-container {
     position: relative;
     display: flex;
     justify-content: center;
@@ -25,17 +18,29 @@ header {
 
 }
 
+.logo-content {
+    width: 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+    
+}
+
+
+
 .cart-container {
     margin-top: 10px;
     width: 8vw;
     display: flex;
     align-items: center;
+    
 
 }
 
 
 #cartOffcanvas{
     width: 50vw;
+
 }
 
 @media(max-width: 768px) {
@@ -58,7 +63,6 @@ header {
 
 @media(min-width: 768px) {
     .label-menu-container{
-        width: 30%;
         display: grid;
         align-items: center;
         justify-content: center;
