@@ -1,0 +1,23 @@
+@media(max-width: 768px ){
+#cartOffcanvas{
+    width: 100vw !important; 
+    height: 100vh !important; 
+}
+}
+.item-content{
+    overflow: scroll;
+}
+
+.canv-buy-btn{
+    margin-top: 100px;
+    margin-bottom: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.canv-buy-btn button{
+    margin-left: 50%;
+    width: 200px;
+    height: 50px;
+}
