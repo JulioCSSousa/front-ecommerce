@@ -13,6 +13,7 @@
 }
 }
 .item-content{
+    max-height: 500px;
     overflow: scroll;
 }
 
@@ -33,5 +34,13 @@
 
 .spanNum{
     color: rgb(218, 28, 28);
+
+}
+
+.canv-buy-btn{
+    display: flex;
+    position: absolute;
+    top: 500px;
+
 
 }
