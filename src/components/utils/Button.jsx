@@ -1,5 +1,5 @@
 
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import './Button.css'
 import { BsFillCartPlusFill } from "react-icons/bs";
 
@@ -7,17 +7,13 @@ import { BsFillCartPlusFill } from "react-icons/bs";
 export default function Button({ onClick, text = 'Comprar', disabled = false }) {
 
   return (
-    <div className='btn-container'>
-      <div className='btn-content'>
-        <BsFillCartPlusFill 
-          onClick={onClick}
-          disabled={disabled}
-          style={{ cursor: disabled ? 'not-allowed' : 'pointer', width: '30px', height: '30px', background: 'none'}}
-        >
-          {text}
-        </BsFillCartPlusFill>
-      </div>
-    </div>
+    <BsFillCartPlusFill
+      onClick={onClick}
+      disabled={disabled}
+      style={{ cursor: disabled ? 'not-allowed' : 'pointer', width: '90%', height: '80%', background: 'none' }}
+    >
+      {text}
+    </BsFillCartPlusFill>
   );
 }
 

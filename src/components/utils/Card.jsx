@@ -6,7 +6,6 @@ import { AppContext } from '../../context/appContext';
 import { Link as RouterLink } from 'react-router-dom';
 
 
-
 export default function ProductCard({ data }) {
     const { setCartItems } = useContext(AppContext);
     const [isAdded, setIsAdded] = useState(false);
@@ -17,12 +16,12 @@ export default function ProductCard({ data }) {
             const itemExists = prevItems.some(item => item.name === data.name);
             if (!itemExists) {
                 setIsAdded(true);
-                setTimeout(() => setIsAdded(false), 2000); 
-                return [...prevItems,  {...data, quantity: 1}];
+                setTimeout(() => setIsAdded(false), 2000);
+                return [...prevItems, { ...data, quantity: 1 }];
             }
             return prevItems.map(item =>
                 item.name === data.name
-                    ? { ...item, quantity: item.quantity + 1 } 
+                    ? { ...item, quantity: item.quantity + 1 }
                     : item
             );
         });
@@ -31,7 +30,16 @@ export default function ProductCard({ data }) {
     return (
         <div className="col-6 col-sm-6 col-md-6 col-lg-3 mb-4" id='card-container'>
             <div className="product-card">
-                <Button onClick={handleAddCart} text={isAdded ? "Adicionado!" : "Comprar"} />
+                <div className='btn-container'>
+                    <div className='btn-content'>
+                        <div className="add-cart-btn">
+                        <Button onClick={handleAddCart} text={isAdded ? "Adicionado!" : "Comprar"}/>
+                        </div>
+                        <div className="buy-btn">
+                            <button className="btn btn-dark" style={{ borderRadius: '50px', height: '50px', width: '130px' }} id='card-buy-btn'>Comprar</button>
+                        </div>
+                    </div>
+                </div>
                 <RouterLink to={data.linkTo} style={{ textDecoration: 'none', color: 'inherit' }}>
                     <img id="img-card" src={data.image} className="card-img" alt={`Imagem de ${data.name}`} />
                 </RouterLink>
