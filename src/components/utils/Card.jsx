@@ -28,23 +28,23 @@ export default function ProductCard({ data }) {
     };
 
     return (
-        <div className="col-6 col-sm-6 col-md-6 col-lg-3 mb-4" id='card-container'>
+        <div className="product-container">
             <div className="product-card">
-                <div className='btn-container'>
-                    <div className='btn-content'>
+                <div className="product-card-content">
+                    <div className="img-content">
+                        <RouterLink to={data.linkTo} style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <img id="img-card" src={data.image} className="card-img" alt={`Imagem de ${data.name}`} />
+                        </RouterLink>
                         <div className="add-cart-btn">
                             <Button onClick={handleAddCart} text={isAdded ? "Adicionado!" : "Comprar"} />
                         </div>
                         <RouterLink Component={RouterLink} to={'/CartResume'} style={{ textDecoration: 'none', color: 'inherit' }}>
                             <div className="buy-btn">
-                                <button onClick={handleAddCart}  className="btn btn-dark" style={{ borderRadius: '50px', height: '50px', width: '130px' }} id='card-buy-btn'>Comprar</button>
+                                <button onClick={handleAddCart} className="btn btn-dark" style={{ borderRadius: '50px', height: '50px', width: '130px' }} id='card-buy-btn'>Comprar</button>
                             </div>
                         </RouterLink>
                     </div>
                 </div>
-                <RouterLink to={data.linkTo} style={{ textDecoration: 'none', color: 'inherit' }}>
-                    <img id="img-card" src={data.image} className="card-img" alt={`Imagem de ${data.name}`} />
-                </RouterLink>
                 <div className="card">
                     <div className="card-text">
                         {data.name}
@@ -54,14 +54,13 @@ export default function ProductCard({ data }) {
                             currency: 'BRL'
                         })}</h4>
                         <div className='card-description'>
-                            <div className="description-content">
-                                {data.description}
-                            </div>
+                            {data.description}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     );
 }
 

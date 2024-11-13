@@ -27,7 +27,7 @@ export default function CanvaCartShop() {
                 </div>
                 <div className="item-content">
                     {cartItems.length === 0 ? (
-                        <p>Seu carrinho está vazio.</p>
+                        <label>Seu carrinho está vazio.</label>
                     ) : (
                         cartItems.map((cartItem) => (
                             <CartItem key={cartItem.name} data={cartItem} />

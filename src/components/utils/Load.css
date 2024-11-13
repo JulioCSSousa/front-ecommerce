@@ -1,13 +1,12 @@
 .load{
-    
-    width: 100%;
+    width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 #clock{
-    margin: auto;
+
     animation: spin 1s linear infinite;
 }
 

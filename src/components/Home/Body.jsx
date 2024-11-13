@@ -43,8 +43,6 @@ export default function Body() {
       <div className='' style={{ display: 'flex', margin: '20px' }}>
       </div>
       <div className="body-container">
-        <div className="product-container">
-          <div className="product-content">
             {loading ? <Load /> : products.map((product) =>
                 <ProductCard
                   key={product.id}
@@ -54,11 +52,10 @@ export default function Body() {
                     description: 
                     product.description, 
                     linkTo: `/products/${product.id}` }}
+                    
                 />
             )};
-          </div>
         </div>
-      </div>
     </>
   );
 }
