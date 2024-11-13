@@ -35,7 +35,7 @@ export default function CanvaCartShop() {
                     )}
                 </div>
                 <div className="canv-buy-btn">
-                    <button className="btn btn-primary">Comprar</button>
+                    <button className="btn btn-dark">Comprar</button>
                 </div>
             </div>
 

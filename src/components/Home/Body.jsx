@@ -52,8 +52,8 @@ export default function Body() {
                     image: product.image, 
                     price: product.price, 
                     description: 
-                    product.description, linkTo: `/products/${product.id}` }}
-                    
+                    product.description, 
+                    linkTo: `/products/${product.id}` }}
                 />
             )};
           </div>

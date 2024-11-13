@@ -33,11 +33,13 @@ export default function ProductCard({ data }) {
                 <div className='btn-container'>
                     <div className='btn-content'>
                         <div className="add-cart-btn">
-                        <Button onClick={handleAddCart} text={isAdded ? "Adicionado!" : "Comprar"}/>
+                            <Button onClick={handleAddCart} text={isAdded ? "Adicionado!" : "Comprar"} />
                         </div>
-                        <div className="buy-btn">
-                            <button className="btn btn-dark" style={{ borderRadius: '50px', height: '50px', width: '130px' }} id='card-buy-btn'>Comprar</button>
-                        </div>
+                        <RouterLink Component={RouterLink} to={'/CartResume'} style={{ textDecoration: 'none', color: 'inherit' }}>
+                            <div className="buy-btn">
+                                <button onClick={handleAddCart}  className="btn btn-dark" style={{ borderRadius: '50px', height: '50px', width: '130px' }} id='card-buy-btn'>Comprar</button>
+                            </div>
+                        </RouterLink>
                     </div>
                 </div>
                 <RouterLink to={data.linkTo} style={{ textDecoration: 'none', color: 'inherit' }}>
