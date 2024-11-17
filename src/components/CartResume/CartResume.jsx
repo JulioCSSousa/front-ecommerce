@@ -8,8 +8,6 @@ import Logo from '/images/logo-no-b.gif';
 export default function CartResume() {
     const { setCartItems, cartItems } = useContext(AppContext);
 
-    
-
     const handleRemoveCart = (itemToRemove) => {
         setCartItems((prevItems) => {
             return prevItems

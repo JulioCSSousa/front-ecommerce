@@ -12,7 +12,6 @@ export default function Provider({ children }) {
     const [valueInput, setValueInput] = useState('');
     const [spanNum, setSpanNum] = useState(1);
 
-    // Sincronizar o estado do carrinho com o localStorage sempre que ele mudar
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }, [cartItems]);
