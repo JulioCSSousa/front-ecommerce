@@ -1,7 +1,9 @@
-import CartItem from '../utils/ShopCart';
+import CartItem from './CartItem';
 import { AppContext } from '../../context/appContext';
 import { useContext } from 'react';
 import './CanvaShopCart.css'
+import { Link as RouterLink } from 'react-router-dom'
+
 export default function CanvaCartShop() {
 
     const { cartItems } = useContext(AppContext);
@@ -34,9 +36,13 @@ export default function CanvaCartShop() {
                         ))
                     )}
                 </div>
-                <div className="canv-buy-btn">
-                    <button className="btn btn-dark">Comprar</button>
-                </div>
+                <RouterLink component={RouterLink} to={'/CartResume'}>
+                    <div className="canv-buy-btn">
+                        <button className="btn btn-dark">Comprar</button>
+                    </div>  
+                </RouterLink>
+
+
             </div>
 
         </>

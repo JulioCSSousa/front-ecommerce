@@ -1,4 +1,4 @@
-import './ShopCart.css';
+import './CartItem.css';
 import { BsFillCartDashFill } from "react-icons/bs";
 import PropTypes from 'prop-types';
 import { useContext} from 'react';

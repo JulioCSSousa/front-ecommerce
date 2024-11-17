@@ -13,6 +13,21 @@
     }
 }
 
+@media(min-width: 768px) {
+    #cartOffcanvas {
+        width: 40vw !important;
+        height: 100vh !important;
+
+    }
+
+    .cart-span-num {
+        display: flex;
+        position: relative;
+        top: 30px;
+        right: 10px;
+    }
+}
+
 .item-content label {
     margin-left: 20px;
 }
@@ -45,7 +60,7 @@
 .canv-buy-btn {
     display: flex;
     position: absolute;
-    top: 500px;
+    top: 400px;
 
 
 }
