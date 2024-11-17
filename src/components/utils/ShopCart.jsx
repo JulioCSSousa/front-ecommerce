@@ -1,12 +1,13 @@
 import './ShopCart.css';
 import { BsFillCartDashFill } from "react-icons/bs";
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
+import { useContext} from 'react';
 import { AppContext } from '../../context/appContext';
 
 export default function CartItem({ data }) {
     const { image, name, price, quantity } = data;
-    const { setCartItems } = useContext(AppContext);
+    const { setCartItems} = useContext(AppContext);
+    
 
     const handleRemoveCart = () => {
         setCartItems(prevItems => {

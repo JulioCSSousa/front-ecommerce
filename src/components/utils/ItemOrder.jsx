@@ -1,5 +1,4 @@
 import './ItemOrder.css';
-import { BsFillCartDashFill } from "react-icons/bs";
 import PropTypes from 'prop-types';
 import { useContext, useState } from 'react';
 import { AppContext } from '../../context/appContext';
