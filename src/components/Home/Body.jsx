@@ -11,7 +11,7 @@ import { AppContext } from '../../context/appContext';
 
 export default function Body() {
 
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
   const { valueInput } = useContext(AppContext);
 
   const [loading, setLoad] = useState(true)
@@ -39,6 +39,7 @@ export default function Body() {
         <h1 style={{ fontFamily: "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif" }}>
           Veja produtos selecionados especialmente para você
         </h1>
+        <p>Devido à hospedagem gratuita, os produtos podem demorar bastante tempo para o completo carregamento na primeira vez</p>
       </div>
       <div className='' style={{ display: 'flex', margin: '20px' }}>
       </div>
@@ -54,8 +55,8 @@ export default function Body() {
                     linkTo: `/products/${product.id}` }}
                     
                 />
-            )};
+            )}
         </div>
     </>
-  );
+  )
 }
