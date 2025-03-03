@@ -22,7 +22,7 @@ export default function Header() {
                         </div>
                         <div className='label-in'>
                             <div style={{ marginRight: '5px' }}>
-                                <a href='#'>Entrar</a>
+                                <a href='/login'>Entrar</a>
                             </div>
                             /
                             <div style={{ marginLeft: '5px' }}>
