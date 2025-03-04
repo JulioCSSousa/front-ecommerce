@@ -44,7 +44,7 @@ export default function Body() {
       <div className='' style={{ display: 'flex', margin: '20px' }}>
       </div>
       <div className="body-container">
-            {loading ? <Load /> : products.map((product) =>
+            {loading ? <Load /> : products?.map((product) =>
                 <ProductCard
                   key={product.id}
                   data={{ name: product.name, 
