@@ -1,7 +1,7 @@
 const KEY_STORAGE = 'AUTH';
 
 const setUserAuth = (data:any) => {
-  localStorage.setItem(KEY_STORAGE, data);
+  localStorage.setItem(KEY_STORAGE, JSON.stringify(data));
 };
 
 const getUserAuth = () => {
