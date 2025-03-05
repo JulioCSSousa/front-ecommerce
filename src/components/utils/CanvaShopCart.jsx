@@ -36,7 +36,7 @@ export default function CanvaCartShop() {
                         ))
                     )}
                 </div>
-                <RouterLink component={RouterLink} to={'/CartResume'}>
+                <RouterLink component={RouterLink} to={'/OrderSummary'}>
                     <div className="canv-buy-btn">
                         <button className="btn btn-dark">Comprar</button>
                     </div>  

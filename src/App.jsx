@@ -2,11 +2,11 @@
 
 import Provider from './context/Provider';
 import Home from './pages/Home';
-import CartResume from './pages/CartResumePage'
 import LoginPage from './pages/Login'
 import Register from './pages/Register';
 import ProductDetail from './components/ProductDetail/ProductDetail'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import OrderSummary from './components/OrderSummary/OrderSummary';
 
 
 export default function App() {
@@ -17,7 +17,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products/:id" element={<ProductDetail />} />
-        <Route path="/cartresume" element={<CartResume />} />
+        <Route path="/ordersummary" element={<OrderSummary />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<Register />} />
       </Routes>
