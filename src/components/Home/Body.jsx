@@ -18,10 +18,19 @@ export default function Body() {
 
   useEffect(() => {
     fetchProducts(valueInput).then((response) => {
-      setProducts(response);
-      setLoad(false)
+        if (Array.isArray(response)) {
+            setProducts(response);
+        } else {
+            console.error("Erro: resposta inválida de fetchProducts");
+            setProducts([]);
+        }
+        setLoad(false);
+    }).catch((error) => {
+        console.error("Erro na requisição:", error);
+        setLoad(false);
     });
-  }, [valueInput]);
+}, [valueInput]);
+
 
   return (
     <>

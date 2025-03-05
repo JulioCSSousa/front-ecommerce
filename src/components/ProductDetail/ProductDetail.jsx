@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Header from "../Home/Header";
 import './ProductDetail.css'
 import { useParams } from "react-router-dom";
-import fetchProductById from "../../api/fetchById";
+import fetchProductById from "../../api/fetchProductById";
 import CepInput from "../utils/CepInput";
 
 
@@ -31,8 +31,8 @@ export default function ProductDetail() {
                 <div className="product-card-large">
                     <div className="image-container">
                         <img
-                            src={product}
-                            alt={product.name}
+                            src={product.imageUrl}
+                            alt={product.description}
                             className="product-image"
                         />
                     </div>
