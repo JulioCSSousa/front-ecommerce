@@ -4,6 +4,7 @@ import Provider from './context/Provider';
 import Home from './pages/Home';
 import CartResume from './pages/CartResumePage'
 import LoginPage from './pages/Login'
+import Register from './pages/Register';
 import ProductDetail from './components/ProductDetail/ProductDetail'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/cartresume" element={<CartResume />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
     </Provider>

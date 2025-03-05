@@ -1,10 +1,12 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Home/Header";
-
+import { login } from "../api/accounts";
+import { setUserAuth } from "../storage/AuthenticatorStorage";
 
 export default function Login() {
-    const [userName, setUserName] = useState('');
+    const navigate = useNavigate()
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [loginValidate, setLoginValidate] = useState(false);
@@ -12,22 +14,23 @@ export default function Login() {
     const [loading, setLoading] = useState(false)
 
     async function handleLogin() {
-        setLoginValidate(true)
-        setLoginError(false)
+        try {
+            setLoading(true)
+            setLoginValidate(true)
+            setLoginError(false)
 
-        if (!userName || !password) {
-            return
+            if (!email || !password) {
+                return
+            }
+
+            const res = await login({ email: email, password: password })
+            setUserAuth(res)
+            navigate('/')
+        } catch {
+            setLoginError(true)
+        } finally {
+            setLoading(false)
         }
-
-        setLoading(true)
-        const res = '' //chamada api
-        setLoading(false)
-
-        if (!res) {
-            return setLoginError(true)
-        }
-
-        alert('ok')
     }
 
     return (
@@ -38,23 +41,23 @@ export default function Login() {
                 <div style={{ width: '400px', marginTop: '50px' }}>
                     <h3 style={{ marginBottom: '30px' }}>Faça login</h3>
 
-                    <p style={{ marginBottom: 0, marginTop: '15px' }}>Nome do usuário</p>
+                    <p style={{ marginBottom: 0, marginTop: '15px' }}>E-mail</p>
                     <input
                         type="text"
                         className="form-control"
-                        placeholder="Digite seu nome..."
-                        value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
+                        placeholder="Digite seu e-mail..."
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <p
                         style={{
                             marginBottom: 0,
                             marginTop: '5px',
                             color: 'red',
-                            display: loginValidate && !userName ? 'block' : 'none'
+                            display: loginValidate && !email ? 'block' : 'none'
                         }}
                     >
-                        Nome do usúario é obrigatório
+                        E-mail é obrigatório
                     </p>
 
                     <p style={{ marginBottom: 0, marginTop: '15px' }}>Senha</p>
@@ -98,7 +101,7 @@ export default function Login() {
                     </p>
 
                     <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-between' }}>
-                        <button className="btn btn-secondary" style={{ width: '48%' }}>Criar uma conta</button>
+                        <button className="btn btn-secondary" style={{ width: '48%' }} onClick={() => navigate('/register')} >Criar uma conta</button>
                         <button className="btn btn-dark" style={{ width: '48%' }} onClick={handleLogin}>Fazer login</button>
                     </div>
 
