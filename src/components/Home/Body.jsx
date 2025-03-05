@@ -1,7 +1,7 @@
 
-import ProductCard from '../utils/Card';
+import ProductCard from '../utils/ProductCard';
 import './Body.css';
-import '../utils/Card'
+import '../utils/ProductCard'
 import SearchBar from '../utils/SearchBar'
 import { useContext, useEffect, useState } from 'react';
 import Load from '../utils/Load'
@@ -18,7 +18,7 @@ export default function Body() {
 
   useEffect(() => {
     fetchProducts(valueInput).then((response) => {
-      setProducts(response.data);
+      setProducts(response);
       setLoad(false)
     });
   }, [valueInput]);
@@ -36,19 +36,19 @@ export default function Body() {
         <img src="" alt='' className="front-img" />
       </div>
       <div className="main-center-text" style={{ height: '20vh', paddingTop: '20px', textAlign: 'center' }}>
-        <h1 style={{ fontFamily: "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif" }}>
+        <h1 style={{ fontFamily: "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif", margin: "2px"}}>
           Veja produtos selecionados especialmente para você
         </h1>
-        <p>Devido à hospedagem gratuita, os produtos podem demorar bastante tempo para o completo carregamento na primeira vez</p>
+        <p style={{margin: "2px"}}>Devido à hospedagem gratuita, os produtos podem demorar bastante tempo para o completo carregamento na primeira vez</p>
       </div>
       <div className='' style={{ display: 'flex', margin: '20px' }}>
       </div>
       <div className="body-container">
-            {loading ? <Load /> : products?.map((product) =>
+            {loading ? <Load /> : products.map((product) =>
                 <ProductCard
                   key={product.id}
                   data={{ name: product.name, 
-                    image: product.image, 
+                    imageUrl: product.imageUrl, 
                     price: product.price, 
                     description: 
                     product.description, 

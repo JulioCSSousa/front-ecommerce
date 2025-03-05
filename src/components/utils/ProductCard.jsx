@@ -33,7 +33,7 @@ export default function ProductCard({ data }) {
                 <div className="product-card-content">
                     <div className="img-content">
                         <RouterLink to={data.linkTo} style={{ textDecoration: 'none', color: 'inherit' }}>
-                            <img id="img-card" src={data.image} className="card-img" alt={`Imagem de ${data.name}`} />
+                            <img id="img-card" src={data.imageUrl} className="card-img" alt={`Imagem de ${data.name}`} />
                         </RouterLink>
                         <div className="add-cart-btn">
                             <Button onClick={handleAddCart} text={isAdded ? "Adicionado!" : "Comprar"} />
@@ -67,7 +67,7 @@ export default function ProductCard({ data }) {
 ProductCard.propTypes = {
     data: PropTypes.shape({
         name: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired,
+        imageUrl: PropTypes.string.isRequired,
         description: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
         linkTo: PropTypes.string.isRequired
