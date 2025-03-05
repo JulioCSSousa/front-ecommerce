@@ -5,7 +5,7 @@ export default async function fetchProducts(params) {
   let linklocal = 'http://localhost:5000/api/products';
 
   try {
-    const url = params ? `${linklocal}?name=${params}` : linklocal;
+    const url = params ? `${linkprod}?name=${params}` : linkprod;
     const response = await axios.get(url);
     console.log(response.data)
     return response.data;
