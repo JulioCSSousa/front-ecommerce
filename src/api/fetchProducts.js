@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default async function fetchProducts(params) {
-  let linkprod = 'https://back-ecommerce-wl58.onrender.com:5000/api/products';
+  let linkprod = 'https://back-ecommerce-wl58.onrender.com/api/products';
   let linklocal = 'http://localhost:5000/api/products';
 
   try {

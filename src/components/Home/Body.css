@@ -2,6 +2,7 @@
     .body-container {
         display: grid;
         gap: 50px;
+        margin-left: 5%;
         grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
         width: 90%;
         padding: 20px;
@@ -12,6 +13,7 @@
 @media(max-width: 768px) {
     .body-container {
         display: grid;
+        margin: 5%;
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         width: 90%;
         box-sizing: border-box;
