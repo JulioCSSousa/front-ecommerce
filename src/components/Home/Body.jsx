@@ -46,8 +46,8 @@ export default function Body() {
       <div className="body-container">
             {loading ? <Load /> : products.map((product) =>
                 <ProductCard
-                  key={product.id}
-                  data={{ name: product.name, 
+                    key={product.id}
+                    data={{ name: product.name, 
                     imageUrl: product.imageUrl, 
                     price: product.price, 
                     description: 

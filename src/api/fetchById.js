@@ -1,23 +1,15 @@
-// Função assíncrona para buscar os produtos
-export default async function fetchProductByID(id) {
-    let linkprod = 'https://back-ecommerce-wl58.onrender.com/api/products'
-    let linklocal = 'http://localhost:5000/api/products'
-    if (id) {
-      const res = await fetch(`${linkprod}/${id}`);
-      if (!res.ok) {
-        throw new Error(`Erro na requisição: ${res.status}`);
-      }
-      return res.json()
+import axios from 'axios';
+
+export default async function fetchProductById(id) {
+    const linkprod = 'https://back-ecommerce-wl58.onrender.com/api/products/';
+    const linklocal = 'http://localhost:5000/api/products/';
+
+    const url = linkprod;
+    
+    try {
+        const res = await axios.get(`${url}/${id}`);
+        return res.data;
+    } catch (error) {
+        throw new Error(`Erro na requisição: ${error.response?.status || error.message}`);
     }
-  
-    const res = await fetch(`${linkprod}`);
-  
-    if (!res.ok) {
-      throw new Error(`Erro na requisição: ${res.status}`);
-    }
-    const data = await res.json();
-  
-    return data;
-  }
-  
-  
+}

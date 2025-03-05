@@ -78,7 +78,7 @@ CartResume.propTypes = {
     cartItems: PropTypes.arrayOf(
         PropTypes.shape({
             name: PropTypes.string.isRequired,
-            image: PropTypes.string.isRequired,
+            imageUrl: PropTypes.string.isRequired,
             price: PropTypes.number.isRequired,
             quantity: PropTypes.number.isRequired,
         })
