@@ -1,9 +1,7 @@
 import { useContext } from "react";
 import { AppContext } from "../../context/appContext";
-
-import ItemOrder from "../utils/ItemOrder";
 import './OrderSummary.css';
-
+import { FaShoppingCart, FaTrash, FaArrowLeft, FaCreditCard } from "react-icons/fa";
 
 export default function OrderSummary() {
     const { setCartItems, cartItems } = useContext(AppContext);
@@ -24,43 +22,82 @@ export default function OrderSummary() {
         return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     };
 
+    const handleClearCart = () => {
+        setCartItems([]);
+    };
+
     return (
-        <section className="order-summary-container">
-            <header className="order-header">
-                <img src="" alt="Logo" className="order-logo" />
-            </header>
-            <h2 className="cart-title">Meu Carrinho</h2>
-            <section className="order-content">
+        <div className="order-summary-container">
+            {/* Header */}
+            <div className="order-header">
+                <button className="back-button">
+                    <FaArrowLeft /> 
+                </button>
+                <h1 className="cart-title">
+                    <FaShoppingCart /> Meu Carrinho
+                </h1>
+                {cartItems.length > 0 && (
+                    <button className="clear-cart-btn" onClick={handleClearCart}>
+                        <FaTrash /> Limpar Carrinho
+                    </button>
+                )}
+            </div>
+
+            {/* Conteúdo Principal */}
+            <div className="order-content">
+                {/* Lista de Itens */}
                 <div className="items-list">
                     {cartItems.length === 0 ? (
-                        <p className="empty-cart">Seu carrinho está vazio.</p>
+                        <div className="empty-cart">
+                            <p>Seu carrinho está vazio. 🛒</p>
+                            <button className="btn btn-primary">Ver Produtos</button>
+                        </div>
                     ) : (
                         cartItems.map((cartItem) => (
-                            <ItemOrder
-                                key={cartItem.name}
-                                data={cartItem}
-                                onRemove={() => handleRemoveCart(cartItem)}
-                            />
+                            <div key={cartItem.id} className="cart-item">
+                                <div className="item-info">
+                                    <img src={cartItem.imageUrl} className="item-image" />
+                                    <div className="item-details">
+                                        <div className="name" >
+                                            <label>{cartItem.name}</label>
+                                        </div>
+                                        <p>Quantidade: {cartItem.quantity}</p>
+                                        <p>Preço: {cartItem.price.toLocaleString("pt-br", {
+                                            style: "currency",
+                                            currency: "BRL",
+                                        })}</p>
+                                    </div>
+                                </div>
+                                <button className="remove-item-btn" onClick={() => handleRemoveCart(cartItem)}>
+                                    <FaTrash /> 
+                                </button>
+                            </div>
                         ))
                     )}
                 </div>
-                <div className="order-summary">
-                    <h3>Resumo do Pedido</h3>
-                    <p className="total-price">
-                        <strong>Total:</strong> {calculateTotalPrice().toLocaleString("pt-br", {
-                            style: "currency",
-                            currency: "BRL",
-                        })}
-                    </p>
-                    <div className="order-buttons">
-                        <button className="btn btn-secondary">Continuar Comprando</button>
-                        <button className="btn btn-primary">Finalizar Compra</button>
+
+                {/* Resumo do Pedido */}
+                {cartItems.length > 0 && (
+                    <div className="order-summary-card">
+                        <h2>Resumo do Pedido</h2>
+                        <div className="summary-details">
+                            <p>Subtotal: <span>{calculateTotalPrice().toLocaleString("pt-br", {
+                                style: "currency",
+                                currency: "BRL",
+                            })}</span></p>
+                            <p>Frete: <span>Grátis</span></p>
+                            <hr />
+                            <p className="total-price">Total: <span>{calculateTotalPrice().toLocaleString("pt-br", {
+                                style: "currency",
+                                currency: "BRL",
+                            })}</span></p>
+                        </div>
+                        <button className="btn btn-checkout">
+                            <FaCreditCard /> Finalizar Compra
+                        </button>
                     </div>
-                </div>
-            </section>
-        </section>
+                )}
+            </div>
+        </div>
     );
 }
-
-OrderSummary.propTypes = {}; 
-
