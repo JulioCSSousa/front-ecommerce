@@ -1,9 +1,9 @@
 // Função assíncrona para buscar os produtos
 export default async function seedProducts(data) {
-    let linkprod = 'https://back-ecommerce-wl58.onrender.com/api/products'
-    let linklocal = 'http://localhost:8000/api/products'
+    let linkprod = 'https://back-ecommerce-wl58.onrender.com:5000/api/products'
+    let linklocal = 'http://localhost:5000/api/products'
     
-    return await fetch(linklocal,{
+    return await fetch(linkprod,{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
