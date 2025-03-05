@@ -41,8 +41,6 @@ export default function CanvaCartShop() {
                         <button className="btn btn-dark">Comprar</button>
                     </div>  
                 </RouterLink>
-
-
             </div>
 
         </>
