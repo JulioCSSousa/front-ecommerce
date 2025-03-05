@@ -24,15 +24,13 @@ export default function ProductDetail() {
         <>
             <Header />
             <div className="img-body">
-            <img src={product.img} alt={product.name} className="product-image" />
-
+            <img src={product.img} alt="" className="product-image" />
             </div>
             <div className="product-detail">
                 <div className="product-card-large">
                     <div className="image-container">
                         <img
                             src={product.imageUrl}
-                            alt={product.description}
                             className="product-image"
                         />
                     </div>

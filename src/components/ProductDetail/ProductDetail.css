@@ -1,87 +1,169 @@
-.product-detail {
-    display: flex;
-    justify-content: center;
-    align-items: top;
-    padding: 20px;
-    padding-left: 15%;
-  }
-  
-  @media(min-width: 768px){
-  .product-card-large {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    width: 600px;
-    height: 600px;
-
-  }
+/* Reset e fonte */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
-  .image-container {
-    overflow: hidden;
-  }
-  
-  .product-image {
-    width: 100%;
-    transition: transform 0.3s ease;
-  }
-  
-  .side-detail{
 
+/* Container principal */
+.product-detail {
+  display: flex;
+  justify-content: flex-start; /* Garante que os itens fiquem lado a lado */
+  align-items: flex-start;
+  padding: 40px;
+  gap: 50px;
+  flex-wrap: nowrap; /* Impede que os itens fiquem empilhados em telas grandes */
+}
+
+/* Card do produto (Imagem) */
+.product-card-large {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: auto;
+  flex-shrink: 0; /* Evita que a imagem diminua demais */
+}
+
+/* Container da imagem */
+.image-container {
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Imagem */
+.product-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* Mantém o aspecto correto da imagem */
+  transition: transform 0.3s ease-in-out;
+}
+
+.product-image:hover {
+  transform: scale(1.05);
+}
+
+/* Lado direito (detalhes do produto) */
+.side-detail {
+  flex: 1; /* Ocupa o resto do espaço disponível */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Nome do produto */
+.side-name {
+  font-size: 2rem;
+  font-style: italic;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Preço */
+.price {
+  font-size: 2rem;
+  color: #27ae60;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+/* Botão de compra */
+.btn-cont {
+  margin-top: 30px;
+}
+
+#buy-btn {
+  width: 100%;
+  max-width: 400px;
+  height: 60px;
+  border-radius: 50px;
+  font-size: 20px;
+  font-weight: bold;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+#buy-btn:hover {
+  background: #c0392b;
+  transform: scale(1.05);
+}
+
+/* Quantidade */
+.quant {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.quant label {
+  font-size: 18px;
+}
+
+.quant input {
+  margin-left: 10px;
+  width: 60px;
+  height: 35px;
+  text-align: center;
+  font-size: 18px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+/* CEP */
+.cep {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.cep label {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.cal-btn {
+  margin-top: 10px;
+}
+
+.calculate-button {
+  padding: 12px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.calculate-button:hover {
+  background: #2980b9;
+  transform: scale(1.05);
+}
+
+/* 🔥 RESPONSIVIDADE 🔥 */
+@media (max-width: 1024px) {
+  .product-detail {
+      flex-wrap: wrap; /* Permite empilhar os elementos quando necessário */
+      justify-content: center;
   }
 
-  .side-name{
-    font-size: x-large;
-    font-family: inherit;
-    font-style: italic;
+  .product-card-large {
+      width: 100%;
+      max-width: 400px;
   }
 
-  .price{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 50px;
-
-  }
-
-  .price h4{
-    font-size: xx-large;
-  }
-  .btn-cont{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-
+  .side-detail {
+      width: 100%;
+      max-width: 600px;
   }
 
   #buy-btn {
-    width: 400px;
-    height: 75px;
-    border-radius: 50px;
+      width: 100%;
   }
-
-  .quant{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-  }
-
-  .quant input{
-    margin-left: 5px;
-    max-width: 50px;
-  }
-
-  .cep{
-    display: flex;
-    flex-direction: column;
-    margin: 20px;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .cal-btn{
-    margin: 5px;
-    display: flex;
-    flex-direction: column;
-  }
+}
