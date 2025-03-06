@@ -1,3 +1,3 @@
 Site ecommerce de aromatizantes
 
-link: https://juliosousa-dev.netlify.app/
+link: https://juliosousa-dev.netlify.app
