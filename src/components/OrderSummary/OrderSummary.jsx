@@ -1,10 +1,12 @@
 import { useContext } from "react";
 import { AppContext } from "../../context/appContext";
 import './OrderSummary.css';
-import { FaShoppingCart, FaTrash, FaArrowLeft, FaCreditCard } from "react-icons/fa";
+import { FaShoppingCart, FaTrash, FaArrowLeft, FaCreditCard, FaPlus, FaMinus } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function OrderSummary() {
     const { setCartItems, cartItems } = useContext(AppContext);
+    const navigate = useNavigate(); // Inicializando o hook useNavigate
 
     const handleRemoveCart = (itemToRemove) => {
         setCartItems((prevItems) => {
@@ -16,8 +18,31 @@ export default function OrderSummary() {
                 )
                 .filter((item) => item.quantity > 0);
         });
+        
     };
 
+    const handleAddCart = (itemToAdd) => {
+        setCartItems((prevItems) => {
+            return prevItems.map((item) =>
+                item.name === itemToAdd.name
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            );
+        });
+    };
+
+    const handleDecreaseCart = (itemToDecrease) => {
+        setCartItems((prevItems) => {
+            return prevItems.map((item) =>
+                item.name === itemToDecrease.name && item.quantity > 1
+                    ? { ...item, quantity: item.quantity - 1 }
+                    : item
+            );
+        });
+    };
+    const handleGoBack = () => {
+        navigate("/"); // Redireciona para a página principal ("/")
+    };
     const calculateTotalPrice = () => {
         return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     };
@@ -30,8 +55,8 @@ export default function OrderSummary() {
         <div className="order-summary-container">
             {/* Header */}
             <div className="order-header">
-                <button className="back-button">
-                    <FaArrowLeft /> 
+                <button className="back-button" onClick={handleGoBack}>
+                    <FaArrowLeft />
                 </button>
                 <h1 className="cart-title">
                     <FaShoppingCart /> Meu Carrinho
@@ -56,20 +81,37 @@ export default function OrderSummary() {
                         cartItems.map((cartItem) => (
                             <div key={cartItem.id} className="cart-item">
                                 <div className="item-info">
-                                    <img src={cartItem.imageUrl} className="item-image" />
+                                    <img src={cartItem.imageUrl} alt={cartItem.name} className="item-image" />
                                     <div className="item-details">
-                                        <div className="name" >
+                                        <div className="name">
                                             <label>{cartItem.name}</label>
                                         </div>
-                                        <p>Quantidade: {cartItem.quantity}</p>
                                         <p>Preço: {cartItem.price.toLocaleString("pt-br", {
                                             style: "currency",
                                             currency: "BRL",
                                         })}</p>
                                     </div>
                                 </div>
+
+                                {/* Botões de Aumentar/Diminuir */}
+                                <div className="quantity-controls">
+                                    <button
+                                        className="quantity-btn"
+                                        onClick={() => handleDecreaseCart(cartItem)}
+                                    >
+                                        <FaMinus />
+                                    </button>
+                                    <span className="quantity">{cartItem.quantity}</span>
+                                    <button
+                                        className="quantity-btn"
+                                        onClick={() => handleAddCart(cartItem)}
+                                    >
+                                        <FaPlus />
+                                    </button>
+                                </div>
+
                                 <button className="remove-item-btn" onClick={() => handleRemoveCart(cartItem)}>
-                                    <FaTrash /> 
+                                    <FaTrash />
                                 </button>
                             </div>
                         ))
