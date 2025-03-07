@@ -15,6 +15,7 @@ export default function Register() {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
     const [passwordMatch, setPasswordMatch] = useState(false);
+    const [passwordLengthValidation, setPasswordLengthValidation] = useState<any>('');
     const [createDataValidate, setCreateDataValidate] = useState(false);
     const [loginError, setLoginError] = useState(false);
     const [loading, setLoading] = useState(false)
@@ -65,6 +66,13 @@ export default function Register() {
         }
         return setPasswordMatch(false)
     }, [password, confirmPassword])
+
+    useEffect(() => {
+        if (passwordLengthValidation.length > 6) {
+            return setPasswordLengthValidation(true)
+        }
+        return setPasswordLengthValidation(false)
+    }, [passwordLengthValidation])
 
     useEffect(() => {
         if (phoneNumber.length > 10) {
@@ -142,7 +150,7 @@ export default function Register() {
                             display: createDataValidate && (!emailValidation || !email) ? 'block' : 'none'
                         }}
                     >
-                        {!email ? 'E-mail é obrigatório': 'E-mail inválido'}
+                        {!email ? 'E-mail é obrigatório' : 'E-mail inválido'}
                     </p>
 
                     <p style={{ marginBottom: 0, marginTop: '15px' }}>Senha</p>
@@ -170,6 +178,15 @@ export default function Register() {
                     >
                         Senha é obrigatória
                     </p>
+                    <p
+                        style={{
+                            marginTop: '5px',
+                            color: 'red',
+                            display: createDataValidate && password.length < 6 ? 'block' : 'none'
+                        }}
+                    >
+                        A senha deve ter pelo menos 6 caracteres
+                    </p>
 
                     <p style={{ marginBottom: 0, marginTop: '15px' }}>Repita a senha</p>
                     <div className="input-group">
@@ -194,9 +211,8 @@ export default function Register() {
                             display: !passwordMatch ? 'block' : 'none'
                         }}
                     >
-                        Senhas não conrrespondem
+                        Senhas não correspondem
                     </p>
-
                     <p
                         style={{
                             marginTop: '10px',

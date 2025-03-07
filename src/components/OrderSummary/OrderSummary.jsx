@@ -75,7 +75,7 @@ export default function OrderSummary() {
                     {cartItems.length === 0 ? (
                         <div className="empty-cart">
                             <p>Seu carrinho está vazio. 🛒</p>
-                            <button className="btn btn-primary">Ver Produtos</button>
+                            <button onClick={() => handleGoBack()} className="btn btn-primary">Ver Produtos</button>
                         </div>
                     ) : (
                         cartItems.map((cartItem) => (
@@ -134,7 +134,7 @@ export default function OrderSummary() {
                                 currency: "BRL",
                             })}</span></p>
                         </div>
-                        <button className="btn btn-checkout">
+                        <button className="btn btn-checkout" onClick={() => navigate("/checkout")}>
                             <FaCreditCard /> Finalizar Compra
                         </button>
                     </div>
