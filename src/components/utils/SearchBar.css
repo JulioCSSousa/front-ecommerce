@@ -1,23 +1,36 @@
 .search-container {
     margin: 20px;
-    width: 90%;
+    width: 75%;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
-    margin-left: auto;
+    margin-left: 20%;
+    margin-top: 5%;
 
 }
 
 @media (min-width: 768px) {
+    #searchBar{
+        background-color: cornsilk;
+    }
     #searchBar:hover {
         box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
-        background-color: #f5f5f5;
+        background-color: cornsilk;
 
     }
     #search-btn{
-        background: none;
-        position: relative;
-        right: 50px;
+        height: 40px;
+        width: 40px;
+        border: 1px solid;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        display: flex;
+
+    }
+    #search-btn:hover{
+        background-color: lightgray;
+
     }
 }
 
