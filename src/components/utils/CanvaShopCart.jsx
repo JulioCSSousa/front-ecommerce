@@ -1,12 +1,27 @@
 import CartItem from './CartItem';
 import { AppContext } from '../../context/appContext';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './CanvaShopCart.css'
 import { Link as RouterLink } from 'react-router-dom'
 
 export default function CanvaCartShop() {
 
     const { cartItems } = useContext(AppContext);
+    const initialIsMobile = window.innerWidth <= 500;
+
+    const [isMobile, setIsMobile] = useState(initialIsMobile);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 500);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     return (
         <>
             <div className="cart-container">
@@ -18,9 +33,11 @@ export default function CanvaCartShop() {
                         <path fillRule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M14 14V5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1M8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132" />
                     </svg>
                 </button>
-                <div className="label-cart">
-                    <label htmlFor="">Carrinho</label>
-                </div>
+                {!isMobile && (
+                    <div className="label-cart">
+                        <label htmlFor="">Carrinho</label>
+                    </div>
+                )}
             </div>
             <div className="offcanvas offcanvas-end" tabIndex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
                 <div className="offcanvas-header">

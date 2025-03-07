@@ -4,12 +4,27 @@ import CanvaCartShop from '../utils/CanvaShopCart';
 import Navbar from '../utils/Navbar';
 import './Header.css';
 import Logo from '/images/logo-no-b.gif';
+import { useEffect, useState } from 'react';
 
 
 export default function Header() {
+    const initialIsMobile = window.innerWidth <= 500;
+    const [isMobile, setIsMobile] = useState(initialIsMobile);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 500);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     const navigate = useNavigate()
 
-    function handleLogout(){
+    function handleLogout() {
         removeUserAuth()
         navigate('/login')
     }
@@ -18,17 +33,20 @@ export default function Header() {
         <>
             <header>
                 <section className="header-container">
-                    <div className="logo-content">
+                    <div className="logo-content" style={{ cursor: 'pointer' }}>
                         <img src={Logo} alt="Logo" style={{ height: '60px' }} />
                     </div>
                 </section>
                 <section>
-                    <div className="label-menu-container">
-                        <div>
-                            <h6><b>Minha Conta</b></h6>
-                        </div>
+                    <div className="label-menu-container" >
+                        {!isMobile && (
+                            <div>
+                                <h6 style={{ cursor: 'pointer' }}><b>Minha Conta</b></h6>
+                            </div>
+                        )
+                        }
                         {getUserAuth()?.token ?
-                            < button className="btn btn-secondary" onClick={handleLogout} >Sair</button>
+                            < p style={{ cursor: 'pointer' }} onClick={handleLogout} >Sair</p>
                             :
                             <div className='label-in'>
                                 <div style={{ marginRight: '5px' }}>

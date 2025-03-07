@@ -28,8 +28,8 @@ export default function ProductCard({ data }) {
     };
 
     return (
-        <div className="product-container">
-            <div className="product-card">
+        <div className="product-container" >
+            <div className="product-card" >
                 <div className="product-card-content">
                     <div className="img-content">
                         <RouterLink to={data.linkTo} style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -38,7 +38,7 @@ export default function ProductCard({ data }) {
                         <div className="add-cart-btn">
                             <Button onClick={handleAddCart} text={isAdded ? "Adicionado!" : "Comprar"} />
                         </div>
-                        <RouterLink Component={RouterLink} to={'/CartResume'} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <RouterLink Component={RouterLink} to={'/OrderSummary'} style={{ textDecoration: 'none', color: 'inherit' }}>
                             <div className="buy-btn">
                                 <button onClick={handleAddCart} className="btn btn-dark" style={{ borderRadius: '50px', height: '50px', width: '130px' }} id='card-buy-btn'>Comprar</button>
                             </div>
