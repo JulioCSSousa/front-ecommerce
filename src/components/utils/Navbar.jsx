@@ -14,7 +14,7 @@ export default function Navbar() {
         const fetchedProducts = await fetchProductsByCategory(categoryName); // Buscar produtos
         setProducts(fetchedProducts); // Armazenar os produtos
     };
-
+    
     // Função para fechar o modal
     const closeModal = () => {
         setShowModal(false);
@@ -51,6 +51,7 @@ export default function Navbar() {
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <h2>{category}</h2>
                         <div className="product-list">
+                            
                             {products.length > 0 ? (
                                 products.map((product) => (
                                     <div key={product.id} className="product-card">
@@ -58,9 +59,13 @@ export default function Navbar() {
                                         <h3>{product.name}</h3>
                                         <p>{product.description}</p>
                                     </div>
+                                    
                                 ))
+                                
                             ) : (
+                                
                                 <p>Carregando produtos...</p>
+                                
                             )}
                         </div>
                         <button className="close-button" onClick={closeModal}>

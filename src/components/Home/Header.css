@@ -48,30 +48,36 @@ header {
     width: 50vw;
 }
 
-@media(max-width: 500px) {
+@media(max-width: 768px) {
     header {
         grid-template-columns: 1fr 1fr;
         padding: 20px;
         height: auto;
     }
-    .login-signup-buttons {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .label-in {
-        display: flex;
-        justify-content: center;
-    }
+  
     .logo-container {
         margin-left: 0;
     }
     .cart-container {
         width: auto;
         margin-top: 0;
+        justify-content: end;
     }
     #cartOffcanvas {
         width: 80vw;
+    }
+    .spanNum{
+        padding: 1px;
+        bottom: 50px;
+        position: relative;
+        left: 50px;
+        border-radius: 50%;
+        opacity: 0.8;
+    }  
+    .label-menu-container {
+        display: flex;
+ 
+
     }
 }
 
@@ -82,17 +88,10 @@ header {
         justify-content: center;
     }
 
-
-    .label-in{
-        display: flex;
-        justify-content: left;
-    }
-    .label-cart {
-        opacity: 0.5;
-    }
     .spanNum{
         padding: 1px;
-        bottom: 20px;
+        bottom: 50px;
+        left: 50px;
         position: relative;
         border-radius: 50%;
         opacity: 0.8;
@@ -100,9 +99,15 @@ header {
 
     #cartOffcanvas{
         width: 30vw;
+        
     }
+    .canvacartshop-icon{
+        margin-left: 50%;
+
+    }
+ 
+
+
 }
-
-
 
 

@@ -1,0 +1,110 @@
+/* Definindo um fundo suave e agradável */
+body {
+    background-color: #f7f9fc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Centralizando a caixa de login */
+  .login-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  
+  .login-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 24px;
+  }
+  
+  input.form-control {
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+  }
+  
+  input.form-control:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .input-group-text {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #007bff;
+    font-size: 18px;
+  }
+  
+  .password-toggle {
+    padding: 12px;
+    font-size: 18px;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  .loading-message {
+    text-align: center;
+    margin-top: 10px;
+    color: #888;
+    font-size: 14px;
+  }
+  
+  .btn {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    width: 48%;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+  
+  .btn-dark {
+    background-color: #343a40;
+    color: white;
+    width: 48%;
+  }
+  
+  .btn-dark:hover {
+    background-color: #23272b;
+  }
+  
+  .forgot-password {
+    text-align: center;
+    margin-top: 15px;
+    color: #007bff;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .forgot-password:hover {
+    text-decoration: underline;
+  }
+  

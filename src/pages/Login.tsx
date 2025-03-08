@@ -3,33 +3,34 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Home/Header";
 import { login } from "../api/accounts";
 import { setUserAuth } from "../storage/AuthenticatorStorage";
+import './login.css';
 
 export default function Login() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [loginValidate, setLoginValidate] = useState(false);
     const [loginError, setLoginError] = useState(false);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     async function handleLogin() {
         try {
-            setLoading(true)
-            setLoginValidate(true)
-            setLoginError(false)
+            setLoading(true);
+            setLoginValidate(true);
+            setLoginError(false);
 
             if (!email || !password) {
-                return
+                return;
             }
 
-            const res = await login({ email: email, password: password })
-            setUserAuth(res)
-            navigate('/')
+            const res = await login({ email: email, password: password });
+            setUserAuth(res);
+            navigate('/');
         } catch {
-            setLoginError(true)
+            setLoginError(true);
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     }
 
@@ -37,79 +38,57 @@ export default function Login() {
         <>
             <Header />
 
-            <div style={{ width: '100vw', display: 'flex', justifyContent: 'center' }}>
-                <div style={{ width: '400px', marginTop: '50px' }}>
-                    <h3 style={{ marginBottom: '30px' }}>Faça login</h3>
+            <div className="login-container">
+                <div className="login-box">
+                    <h3>Faça login</h3>
 
-                    <p style={{ marginBottom: 0, marginTop: '15px' }}>E-mail</p>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Digite seu e-mail..."
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <p
-                        style={{
-                            marginBottom: 0,
-                            marginTop: '5px',
-                            color: 'red',
-                            display: loginValidate && !email ? 'block' : 'none'
-                        }}
-                    >
-                        E-mail é obrigatório
-                    </p>
-
-                    <p style={{ marginBottom: 0, marginTop: '15px' }}>Senha</p>
-
-                    <div className="input-group">
+                    <div>
+                        <p>E-mail</p>
                         <input
-                            type={passwordVisible ? "text" : "password"}
+                            type="text"
                             className="form-control"
-                            placeholder="Digite sua senha..."
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Digite seu e-mail..."
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
-                        <div
-                            className="input-group-text password-toggle"
-                            onClick={() => setPasswordVisible(!passwordVisible)}
-                        >
-                            {passwordVisible ? '☻' : '☺'}
+                        {loginValidate && !email && <p className="error-message">E-mail é obrigatório</p>}
+                    </div>
+
+                    <div>
+                        <p>Senha</p>
+                        <div className="input-group">
+                            <input
+                                type={passwordVisible ? "text" : "password"}
+                                className="form-control"
+                                placeholder="Digite sua senha..."
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <div
+                                className="input-group-text password-toggle"
+                                onClick={() => setPasswordVisible(!passwordVisible)}
+                            >
+                                {passwordVisible ? '☻' : '☺'}
+                            </div>
                         </div>
+                        {loginValidate && !password && <p className="error-message">Senha é obrigatória</p>}
                     </div>
-                    <p
-                        style={{
-                            marginTop: '5px',
-                            color: 'red',
-                            display: loginValidate && !password ? 'block' : 'none'
-                        }}
-                    >
-                        Senha é obrigatória
-                    </p>
 
-                    <p
-                        style={{
-                            marginTop: '10px',
-                            textAlign: 'center',
-                            color: loading ? 'darkGray' : 'red',
-                            display: loading || loginError ? 'block' : 'none'
-                        }}
-                    >
+                    <div className="loading-message">
                         {loading ? 'Fazendo login, por favor aguarde...' :
-                            'Usuário ou senha incorretos, favor tente novamente'
-                        }
-                    </p>
-
-                    <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-between' }}>
-                        <button className="btn btn-secondary" style={{ width: '48%' }} onClick={() => navigate('/register')} >Criar uma conta</button>
-                        <button className="btn btn-dark" style={{ width: '48%' }} onClick={handleLogin}>Fazer login</button>
+                            (loginError ? 'Usuário ou senha incorretos, favor tente novamente' : '')}
                     </div>
 
-                    <p style={{ marginBottom: 0, marginTop: '15px' }}>Esqueceu sua senha? <span style={{ color: 'blue' }}>Clique aqui</span></p>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <button className="btn btn-secondary" onClick={() => navigate('/register')}>Criar uma conta</button>
+                        <button className="btn btn-dark" onClick={handleLogin}>Fazer login</button>
+                    </div>
+
+                    <p className="forgot-password" onClick={() => alert("Recuperação de senha")}>
+                        Esqueceu sua senha? Clique aqui
+                    </p>
                 </div>
-
-            </div >
-
+            </div>
         </>
-    )
+    );
 }

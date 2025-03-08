@@ -4,23 +4,10 @@ import CanvaCartShop from '../utils/CanvaShopCart';
 import Navbar from '../utils/Navbar';
 import './Header.css';
 import Logo from '/images/logo-no-b.gif';
-import { useEffect, useState } from 'react';
 
 
 export default function Header() {
-    const initialIsMobile = window.innerWidth <= 500;
-    const [isMobile, setIsMobile] = useState(initialIsMobile);
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 500);
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
 
     const navigate = useNavigate()
 
@@ -37,32 +24,28 @@ export default function Header() {
                         <img src={Logo} alt="Logo" style={{ height: '60px' }} />
                     </div>
                 </section>
-                <section>
-                    <div className="label-menu-container" >
-                        {!isMobile && (
-                            <div>
-                                <h6 style={{ cursor: 'pointer' }}><b>Minha Conta</b></h6>
-                            </div>
-                        )
-                        }
-                        {getUserAuth()?.token ?
-                            < p style={{ cursor: 'pointer' }} onClick={handleLogout} >Sair</p>
-                            :
-                            <div className='label-in'>
-                                <div style={{ marginRight: '5px' }}>
-                                    <a href='/login'>Entrar</a>
-                                </div>
-                                /
-                                <div style={{ marginLeft: '5px' }}>
-                                    <a href='/register'>Cadastrar</a>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </section>
-                <section>
+                <section className='canvacartshop-icon'>
                     <CanvaCartShop />
                 </section>
+                <section>
+                    <div className="label-menu-container">
+                        <div className="account-menu">
+                            <h6 className="account-header" style={{ cursor: 'pointer' }}><b>Minha Conta</b></h6>
+                            {getUserAuth()?.token ? (
+                                <p className="logout" style={{ cursor: 'pointer' }} onClick={handleLogout}>
+                                    Sair
+                                </p>
+                            ) : (
+                                <div className="login-register-links">
+                                    <a href="/login" className="login-link">Entrar</a>
+                                    <span className="divider"> / </span>
+                                    <a href="/register" className="register-link">Cadastrar</a>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </section>
+
             </header >
             <div className="navbar">
                 <Navbar />
