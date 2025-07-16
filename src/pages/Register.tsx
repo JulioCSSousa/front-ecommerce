@@ -1,241 +1,216 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "../components/Home/Header";
-import { register } from "../api/accounts";
+import React, { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import Header from "../components/Home/Header"
+import { register } from "../api/accounts"
+import {
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  Paper,
+  TextField,
+  Typography
+} from "@mui/material"
+import { Visibility, VisibilityOff } from "@mui/icons-material"
 
 export default function Register() {
-    const navigate = useNavigate()
-    const [name, setName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [phoneNumberValidation, setPhoneNumberValidation] = useState(false);
-    const [emailValidation, setEmailValidation] = useState(false);
-    const [passwordVisible, setPasswordVisible] = useState(false);
-    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-    const [passwordMatch, setPasswordMatch] = useState(false);
-    const [passwordLengthValidation, setPasswordLengthValidation] = useState<any>('');
-    const [createDataValidate, setCreateDataValidate] = useState(false);
-    const [loginError, setLoginError] = useState(false);
-    const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  const [name, setName] = useState("")
+  const [phoneNumber, setPhoneNumber] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [passwordVisible, setPasswordVisible] = useState(false)
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false)
+  const [validate, setValidate] = useState(false)
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-    function dataValidation() {
-        if (!name || !phoneNumber || !email || !password || !confirmPassword || !passwordMatch) {
-            return true
-        }
-        if (phoneNumber.length < 11) {
-            return true
-        }
-        if (!email.includes('@')) {
-            return true
-        }
-        return false
+  const passwordMatch = password === confirmPassword
+  const isPhoneValid = phoneNumber.length >= 11
+  const isEmailValid = email.includes("@")
+  const isPasswordLengthValid = password.length >= 6
+
+  const isFormInvalid =
+    !name ||
+    !phoneNumber ||
+    !email ||
+    !password ||
+    !confirmPassword ||
+    !passwordMatch ||
+    !isPhoneValid ||
+    !isEmailValid ||
+    !isPasswordLengthValid
+
+  async function handleCreateAccount() {
+    try {
+      setLoading(true)
+      setValidate(true)
+      setError(false)
+
+      if (isFormInvalid) return
+
+      const res = await register({
+        name,
+        phoneNumber: phoneNumber.replace(/\D/g, ""),
+        email,
+        password,
+        confirmPassword
+      })
+
+      navigate("/login")
+    } catch {
+      setError(true)
+    } finally {
+      setLoading(false)
     }
+  }
 
-    async function handleCreateAccount() {
-        try {
-            setLoading(true)
-            setCreateDataValidate(true)
-            setLoginError(false)
+  return (
+    <>
+      <Header />
 
-            if (dataValidation()) {
-                return
+      <Box
+        sx={{
+          width: "100vw",
+          display: "flex",
+          justifyContent: "center",
+          mt: 4,
+          px: 2,
+          mb: 8
+        }}
+      >
+        <Paper sx={{ width: 400, p: 4 }} elevation={3}>
+          <Typography variant="h5" gutterBottom>
+            Crie já sua conta
+          </Typography>
+
+          <TextField
+            label="Nome"
+            fullWidth
+            margin="normal"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            error={validate && !name}
+            helperText={validate && !name ? "Nome é obrigatório" : ""}
+          />
+
+          <TextField
+            label="Telefone"
+            type="tel"
+            fullWidth
+            margin="normal"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            error={validate && (!isPhoneValid || !phoneNumber)}
+            helperText={
+              validate && !phoneNumber
+                ? "Telefone é obrigatório"
+                : validate && !isPhoneValid
+                ? "Telefone inválido"
+                : ""
             }
+          />
 
-            const res = await register(
-                {
-                    name: name,
-                    phoneNumber: phoneNumber.replace(/\D/g, ''),
-                    email: email,
-                    password: password,
-                    confirmPassword: confirmPassword
-                })
+          <TextField
+            label="E-mail"
+            type="email"
+            fullWidth
+            margin="normal"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={validate && (!isEmailValid || !email)}
+            helperText={
+              validate && !email
+                ? "E-mail é obrigatório"
+                : validate && !isEmailValid
+                ? "E-mail inválido"
+                : ""
+            }
+          />
 
-            navigate('/login')
-        } catch {
-            return setLoginError(true)
-        } finally {
-            setLoading(false)
-        }
-    }
+          <TextField
+            label="Senha"
+            type={passwordVisible ? "text" : "password"}
+            fullWidth
+            margin="normal"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={validate && (!password || !isPasswordLengthValid)}
+            helperText={
+              validate && !password
+                ? "Senha é obrigatória"
+                : validate && !isPasswordLengthValid
+                ? "A senha deve ter pelo menos 6 caracteres"
+                : ""
+            }
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setPasswordVisible(!passwordVisible)}>
+                    {passwordVisible ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+          />
 
-    useEffect(() => {
-        if (password === confirmPassword) {
-            return setPasswordMatch(true)
-        }
-        return setPasswordMatch(false)
-    }, [password, confirmPassword])
+          <TextField
+            label="Repita a senha"
+            type={confirmPasswordVisible ? "text" : "password"}
+            fullWidth
+            margin="normal"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            error={validate && !passwordMatch}
+            helperText={validate && !passwordMatch ? "Senhas não correspondem" : ""}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
+                    {confirmPasswordVisible ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+          />
 
-    useEffect(() => {
-        if (passwordLengthValidation.length > 6) {
-            return setPasswordLengthValidation(true)
-        }
-        return setPasswordLengthValidation(false)
-    }, [passwordLengthValidation])
+          {loading && (
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              Criando sua conta, por favor aguarde...
+            </Typography>
+          )}
+          {error && (
+            <Typography variant="body2" color="error" sx={{ mt: 2 }}>
+              Falha ao criar conta, favor tente novamente.
+            </Typography>
+          )}
 
-    useEffect(() => {
-        if (phoneNumber.length > 10) {
-            return setPhoneNumberValidation(true)
-        }
-        return setPhoneNumberValidation(false)
-    }, [phoneNumber])
+          <Box sx={{ display: "flex", gap: 2, mt: 4 }}>
+            <Button
+              fullWidth
+              variant="outlined"
+              onClick={() => navigate("/login")}
+            >
+              Fazer login
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={handleCreateAccount}
+            >
+              Criar conta
+            </Button>
+          </Box>
 
-    useEffect(() => {
-        if (email.includes('@')) {
-            return setEmailValidation(true)
-        }
-        return setEmailValidation(false)
-    }, [email])
-
-    return (
-        <>
-            <Header />
-
-            <div style={{ width: '100vw', display: 'flex', justifyContent: 'center', marginBottom: '50px' }}>
-                <div style={{ width: '400px', marginTop: '50px' }}>
-                    <h3 style={{ marginBottom: '30px' }}>Crie já sua conta</h3>
-
-                    <p style={{ marginBottom: 0, marginTop: '15px' }}>Nome</p>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Digite seu nome..."
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                    <p
-                        style={{
-                            marginBottom: 0,
-                            marginTop: '5px',
-                            color: 'red',
-                            display: createDataValidate && !name ? 'block' : 'none'
-                        }}
-                    >
-                        Nome é obrigatório
-                    </p>
-
-                    <p style={{ marginBottom: 0, marginTop: '15px' }}>Telefone</p>
-                    <input
-                        type="number"
-                        className="form-control"
-                        placeholder="Digite seu telefone..."
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                    />
-                    <p
-                        style={{
-                            marginBottom: 0,
-                            marginTop: '5px',
-                            color: 'red',
-                            display: createDataValidate && (!phoneNumberValidation || !phoneNumber) ? 'block' : 'none'
-                        }}
-                    >
-                        {!phoneNumber ? 'Telefone é obrigatório' : 'Telefone inválido'}
-                    </p>
-
-                    <p style={{ marginBottom: 0, marginTop: '15px' }}>E-mail</p>
-                    <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Digite seu e-mail..."
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <p
-                        style={{
-                            marginBottom: 0,
-                            marginTop: '5px',
-                            color: 'red',
-                            display: createDataValidate && (!emailValidation || !email) ? 'block' : 'none'
-                        }}
-                    >
-                        {!email ? 'E-mail é obrigatório' : 'E-mail inválido'}
-                    </p>
-
-                    <p style={{ marginBottom: 0, marginTop: '15px' }}>Senha</p>
-                    <div className="input-group">
-                        <input
-                            type={passwordVisible ? "text" : "password"}
-                            className="form-control"
-                            placeholder="Digite sua senha..."
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <div
-                            className="input-group-text password-toggle"
-                            onClick={() => setPasswordVisible(!passwordVisible)}
-                        >
-                            {passwordVisible ? '☻' : '☺'}
-                        </div>
-                    </div>
-                    <p
-                        style={{
-                            marginTop: '5px',
-                            color: 'red',
-                            display: createDataValidate && !password ? 'block' : 'none'
-                        }}
-                    >
-                        Senha é obrigatória
-                    </p>
-                    <p
-                        style={{
-                            marginTop: '5px',
-                            color: 'red',
-                            display: createDataValidate && password.length < 6 ? 'block' : 'none'
-                        }}
-                    >
-                        A senha deve ter pelo menos 6 caracteres
-                    </p>
-
-                    <p style={{ marginBottom: 0, marginTop: '15px' }}>Repita a senha</p>
-                    <div className="input-group">
-                        <input
-                            type={confirmPasswordVisible ? "text" : "password"}
-                            className="form-control"
-                            placeholder="Repita sua senha..."
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                        />
-                        <div
-                            className="input-group-text password-toggle"
-                            onClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
-                        >
-                            {confirmPasswordVisible ? '☻' : '☺'}
-                        </div>
-                    </div>
-                    <p
-                        style={{
-                            marginTop: '5px',
-                            color: 'red',
-                            display: !passwordMatch ? 'block' : 'none'
-                        }}
-                    >
-                        Senhas não correspondem
-                    </p>
-                    <p
-                        style={{
-                            marginTop: '10px',
-                            textAlign: 'center',
-                            color: loading ? 'darkGray' : 'red',
-                            display: loading || loginError ? 'block' : 'none'
-                        }}
-                    >
-                        {loading ? 'Criando sua conta, por favor aguarde...' :
-                            'Falha ao criar conta, favor tente novamente'
-                        }
-                    </p>
-
-                    <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'space-between' }}>
-                        <button className="btn btn-secondary" style={{ width: '48%' }} onClick={() => navigate('/login')}>Fazer login </button>
-                        <button className="btn btn-dark" style={{ width: '48%' }} onClick={handleCreateAccount}>Criar conta</button>
-                    </div>
-
-                    <p style={{ marginBottom: 0, marginTop: '15px' }}>Já possui uma conta? <span style={{ color: 'blue' }}>Faça login</span></p>
-                </div>
-
-            </div >
-
-        </>
-    )
+          <Typography
+            sx={{ mt: 2, textAlign: "center", color: "primary.main", cursor: "pointer" }}
+            onClick={() => navigate("/login")}
+          >
+            Já possui uma conta? Faça login
+          </Typography>
+        </Paper>
+      </Box>
+    </>
+  )
 }

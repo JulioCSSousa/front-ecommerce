@@ -1,94 +1,125 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "../components/Home/Header";
-import { login } from "../api/accounts";
-import { setUserAuth } from "../storage/AuthenticatorStorage";
-import './login.css';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Header from '../components/Home/Header'
+import { login } from '../api/accounts'
+import { setUserAuth } from '../storage/AuthenticatorStorage'
+import {
+  Box,
+  Paper,
+  TextField,
+  Typography,
+  Button,
+  IconButton,
+  InputAdornment
+} from '@mui/material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function Login() {
-    const navigate = useNavigate();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordVisible, setPasswordVisible] = useState(false);
-    const [loginValidate, setLoginValidate] = useState(false);
-    const [loginError, setLoginError] = useState(false);
-    const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordVisible, setPasswordVisible] = useState(false)
+  const [loginValidate, setLoginValidate] = useState(false)
+  const [loginError, setLoginError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-    async function handleLogin() {
-        try {
-            setLoading(true);
-            setLoginValidate(true);
-            setLoginError(false);
+  async function handleLogin() {
+    try {
+      setLoading(true)
+      setLoginValidate(true)
+      setLoginError(false)
 
-            if (!email || !password) {
-                return;
-            }
+      if (!email || !password) return
 
-            const res = await login({ email: email, password: password });
-            setUserAuth(res);
-            navigate('/');
-        } catch {
-            setLoginError(true);
-        } finally {
-            setLoading(false);
-        }
+      const res = await login({ email, password })
+      setUserAuth(res)
+      navigate('/')
+    } catch {
+      setLoginError(true)
+    } finally {
+      setLoading(false)
     }
+  }
 
-    return (
-        <>
-            <Header />
+  return (
+    <>
+      <Header />
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '80vh',
+          px: 2
+        }}
+      >
+        <Paper sx={{ p: 4, maxWidth: 400, width: '100%' }} elevation={3}>
+          <Typography variant="h5" gutterBottom>
+            Faça login
+          </Typography>
 
-            <div className="login-container">
-                <div className="login-box">
-                    <h3>Faça login</h3>
+          <TextField
+            label="E-mail"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={loginValidate && !email}
+            helperText={loginValidate && !email ? 'E-mail é obrigatório' : ''}
+          />
 
-                    <div>
-                        <p>E-mail</p>
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Digite seu e-mail..."
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        {loginValidate && !email && <p className="error-message">E-mail é obrigatório</p>}
-                    </div>
+          <TextField
+            label="Senha"
+            variant="outlined"
+            type={passwordVisible ? 'text' : 'password'}
+            fullWidth
+            margin="normal"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={loginValidate && !password}
+            helperText={loginValidate && !password ? 'Senha é obrigatória' : ''}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setPasswordVisible(!passwordVisible)} edge="end">
+                    {passwordVisible ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+          />
 
-                    <div>
-                        <p>Senha</p>
-                        <div className="input-group">
-                            <input
-                                type={passwordVisible ? "text" : "password"}
-                                className="form-control"
-                                placeholder="Digite sua senha..."
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                            <div
-                                className="input-group-text password-toggle"
-                                onClick={() => setPasswordVisible(!passwordVisible)}
-                            >
-                                {passwordVisible ? '☻' : '☺'}
-                            </div>
-                        </div>
-                        {loginValidate && !password && <p className="error-message">Senha é obrigatória</p>}
-                    </div>
+          {loading && (
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+              Fazendo login, por favor aguarde...
+            </Typography>
+          )}
 
-                    <div className="loading-message">
-                        {loading ? 'Fazendo login, por favor aguarde...' :
-                            (loginError ? 'Usuário ou senha incorretos, favor tente novamente' : '')}
-                    </div>
+          {loginError && (
+            <Typography variant="body2" color="error" sx={{ mt: 2 }}>
+              Usuário ou senha incorretos, favor tente novamente
+            </Typography>
+          )}
 
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <button className="btn btn-secondary" onClick={() => navigate('/register')}>Criar uma conta</button>
-                        <button className="btn btn-dark" onClick={handleLogin}>Fazer login</button>
-                    </div>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}>
+            <Button variant="outlined" onClick={() => navigate('/register')}>
+              Criar uma conta
+            </Button>
+            <Button variant="contained" onClick={handleLogin}>
+              Fazer login
+            </Button>
+          </Box>
 
-                    <p className="forgot-password" onClick={() => alert("Recuperação de senha")}>
-                        Esqueceu sua senha? Clique aqui
-                    </p>
-                </div>
-            </div>
-        </>
-    );
+          <Typography
+            variant="body2"
+            sx={{ mt: 3, textAlign: 'center', cursor: 'pointer', textDecoration: 'underline' }}
+            onClick={() => alert('Recuperação de senha')}
+          >
+            Esqueceu sua senha? Clique aqui
+          </Typography>
+        </Paper>
+      </Box>
+    </>
+  )
 }

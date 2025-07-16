@@ -1,141 +1,133 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Home/Header';
 import { getUserAuth } from '../storage/AuthenticatorStorage';
-import { useNavigate } from 'react-router-dom';
 
-const Checkout: React.FC = () => {
-  const navigate = useNavigate()
-  const [step, setStep] = useState(1);
-  interface Auth {
-    name?: string;
-    email?: string;
-  }
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Step,
+  StepLabel,
+  Stepper,
+  TextField,
+  Typography,
+  Paper
+} from '@mui/material';
 
-  const [auth, setAuth] = useState<Auth>({});
-
-  const nextStep = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    setStep(step + 1);
-  };
-  const prevStep = () => step > 1 ? setStep(step - 1) : navigate(-1);
+export default function Checkout() {
+  const navigate = useNavigate();
+  const [step, setStep] = useState(0);
+  const [auth, setAuth] = useState({ name: '', email: '' });
 
   useEffect(() => {
-    const auth = getUserAuth();
-    if (auth) {
-      setAuth(auth);
+    const data = getUserAuth();
+    if (data) {
+      setAuth(data);
     }
   }, []);
 
+  const handleNext = () => {
+    if (!auth.name) {
+      navigate('/login');
+      return;
+    }
+    setStep((prev) => prev + 1);
+  };
+
+  const handleBack = () => {
+    if (step === 0) {
+      navigate(-1);
+    } else {
+      setStep((prev) => prev - 1);
+    }
+  };
+
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh' }}>
-        <header style={{ width: '100%', padding: '1rem', backgroundColor: '#f8f9fa', textAlign: 'center', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-          <section className="header-container">
-            <div className="logo-content">
-              <Header />
-            </div>
-          </section>
-        </header>
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <div>
-            <ol style={{ display: 'flex', justifyContent: 'center', listStyleType: 'none', padding: 0, marginBottom: '2rem', cursor: 'pointer' }}>
-              {[1, 2, 3].map((num) => (
-                <li
-                  key={num}
-                  style={{
-                    marginRight: '1rem',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '50%',
-                    backgroundColor: step === num ? '#007bff' : '#e9ecef',
-                    color: step === num ? '#fff' : '#000',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => setStep(num)}
-                >
-                  {num}
-                </li>
-              ))}
-            </ol>
+      <Header />
+      <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <Paper elevation={3} sx={{ p: 4 }}>
+          <Stepper activeStep={step} alternativeLabel>
+            {['Identificação', 'Entrega', 'Pagamento'].map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
 
-            <form onSubmit={() => { }}>
-              {step === 1 && auth.name ? (
-                <>
-                  <div style={{ marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <label htmlFor="name">Nome</label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      id="name"
-                      name="name"
+          <Box mt={4}>
+            {step === 0 && (
+              <>
+                {auth.name ? (
+                  <>
+                    <TextField
+                      label="Nome"
                       value={auth.name}
+                      fullWidth
                       disabled
-                      required
-                      style={{ backgroundColor: '#e9ecef', minWidth: '300px' }}
+                      margin="normal"
                     />
-                  </div>
-                  <div style={{ marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <label htmlFor="email">E-mail</label>
-                    <input
-                      className="form-control"
-                      type="email"
-                      id="email"
-                      name="email"
+                    <TextField
+                      label="E-mail"
                       value={auth.email}
+                      fullWidth
                       disabled
-                      required
-                      style={{ backgroundColor: '#e9ecef', minWidth: '300px' }}
+                      margin="normal"
                     />
-                  </div>
-                </>
-              ) : step === 1 && (
-                <p>Percebi que você não esta logado, clique no botão abaixo para fazer login</p>
-              )}
+                  </>
+                ) : (
+                  <Typography textAlign="center" color="text.secondary" mt={2}>
+                    Você não está logado. Clique no botão abaixo para fazer login.
+                  </Typography>
+                )}
+              </>
+            )}
 
-              {step === 2 && (
-                <div style={{ marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <label htmlFor="delivery">Modo de entrega</label>
-                  <select id="delivery" name="delivery" value={''}>
-                    <option value="express">Express</option>
-                    <option value="normal">Normal</option>
-                  </select>
-                </div>
-              )}
-              {step === 3 && (
-                <div style={{ marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  <label htmlFor="payment">Método de pagamento</label>
-                  <select id="payment" name="payment" value={''} >
-                    <option value="credit">Cartão de crédito</option>
-                    <option value="debit">Cartão de débito</option>
-                    <option value="paypal">Pix</option>
-                  </select>
-                </div>
-              )}
-              <div className="button-group" style={{ display: 'flex', justifyContent: 'center', marginTop: '0.5rem' }}>
+            {step === 1 && (
+              <FormControl fullWidth margin="normal">
+                <InputLabel id="delivery-label">Modo de entrega</InputLabel>
+                <Select labelId="delivery-label" defaultValue="normal">
+                  <MenuItem value="express">Entrega Express</MenuItem>
+                  <MenuItem value="normal">Entrega Normal</MenuItem>
+                </Select>
+              </FormControl>
+            )}
 
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={prevStep}
-                  style={{ marginRight: '0.5rem' }}
-                >
-                  Voltar
-                </button>
+            {step === 2 && (
+              <FormControl fullWidth margin="normal">
+                <InputLabel id="payment-label">Método de pagamento</InputLabel>
+                <Select labelId="payment-label" defaultValue="credit">
+                  <MenuItem value="credit">Cartão de crédito</MenuItem>
+                  <MenuItem value="debit">Cartão de débito</MenuItem>
+                  <MenuItem value="pix">Pix</MenuItem>
+                </Select>
+              </FormControl>
+            )}
+          </Box>
 
-                <button
-                  className="btn btn-dark"
-                  type={step < 3 ? "button" : "submit"}
-                  onClick={!auth.name ? () => navigate('/login') : step < 3 ? nextStep : () => { }}
-                  style={{ marginRight: '0.5rem' }}
-                >
-                  {step === 1 && !auth.name ? 'Fazer login' : step <= 3 ? 'Avançar' : 'Concluir'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+          <Box mt={4} display="flex" justifyContent="space-between">
+            <Button variant="outlined" onClick={handleBack}>
+              Voltar
+            </Button>
+
+            <Button
+              variant="contained"
+              onClick={step === 2 ? () => alert('Compra finalizada!') : handleNext}
+            >
+              {step === 0 && !auth.name
+                ? 'Fazer login'
+                : step === 2
+                ? 'Concluir'
+                : 'Avançar'}
+            </Button>
+          </Box>
+        </Paper>
+      </Container>
     </>
   );
 }
-
-export default Checkout;

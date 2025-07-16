@@ -1,85 +1,91 @@
-import ProductCard from '../utils/ProductCard';
-import './Body.css';
-import '../utils/ProductCard';
-import SearchBar from '../utils/SearchBar';
 import { useContext, useEffect, useState } from 'react';
+import { Container, Typography, Grid, Box } from '@mui/material';
+import ProductCard from '../utils/ProductCard';
+import SearchBar from '../utils/SearchBar';
 import Load from '../utils/Load';
 import fetchProducts from '../../api/fetchProducts';
 import { AppContext } from '../../context/appContext';
 
 export default function Body() {
   const [products, setProducts] = useState([]);
-  const { valueInput } = useContext(AppContext); // A pesquisa será feita com base nesse valor
-  const [allProducts, setAllProducts] = useState([]); // Para armazenar todos os produtos
+  const { valueInput } = useContext(AppContext);
+  const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoad] = useState(true);
 
-  // Função para carregar os produtos
   useEffect(() => {
-    setLoad(true); // Marca o carregamento como verdadeiro
+    setLoad(true);
     fetchProducts(valueInput)
       .then((response) => {
         if (Array.isArray(response)) {
-          setAllProducts(response); // Armazena todos os produtos
-          setProducts(response); // Exibe todos os produtos inicialmente
+          setAllProducts(response);
+          setProducts(response);
         } else {
           console.error("Erro: resposta inválida de fetchProducts");
-          setProducts([]); // Se a resposta não for válida, define como array vazio
+          setProducts([]);
         }
-        setLoad(false); // Marca o carregamento como concluído
+        setLoad(false);
       })
       .catch((error) => {
         console.error("Erro na requisição:", error);
-        setLoad(false); // Marca o carregamento como concluído em caso de erro
+        setLoad(false);
       });
-  }, []); // Carrega todos os produtos uma vez na montagem do componente
+  }, []);
 
-  // Filtra os produtos com base no valor de pesquisa
   useEffect(() => {
     if (!valueInput) {
-      setProducts(allProducts); // Se não houver pesquisa, exibe todos os produtos
+      setProducts(allProducts);
     } else {
       const filteredProducts = allProducts.filter(product =>
         product.name.toLowerCase().includes(valueInput.toLowerCase()) ||
         product.description.toLowerCase().includes(valueInput.toLowerCase())
       );
-      setProducts(filteredProducts); // Exibe os produtos filtrados
+      setProducts(filteredProducts);
     }
-  }, [valueInput, allProducts]); // A filtragem ocorre sempre que valueInput ou allProducts mudar
+  }, [valueInput, allProducts]);
 
   return (
     <>
       <SearchBar />
-      <div className="collapse" id="navbarToggleExternalContent" data-bs-theme="dark">
-        <div className="bg-dark p-4">
-          <h5 className="text-body-emphasis h4">Collapsed content</h5>
-          <span className="text-body-secondary">Toggleable via the navbar brand.</span>
-        </div>
-      </div>
-      <div className="banner-front">
+
+      <Box sx={{ backgroundColor: '#212121', p: 4, color: 'white' }}>
+        <Typography variant="h5">Collapsed content</Typography>
+        <Typography variant="body2">Toggleable via the navbar brand.</Typography>
+      </Box>
+
+      <Box className="banner-front">
         <img src="" alt="" className="front-img" />
-      </div>
-      <div className="main-center-text" style={{ height: '20vh', paddingTop: '20px', textAlign: 'center' }}>
-        <h1 style={{ fontFamily: "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif", margin: "2px" }}>
+      </Box>
+
+      <Box sx={{ py: 4, textAlign: 'center' }}>
+        <Typography variant="h4" gutterBottom>
           Veja produtos selecionados especialmente para você
-        </h1>
-        <p style={{ margin: "2px" }}>
+        </Typography>
+        <Typography variant="body1">
           Devido à hospedagem gratuita, os produtos podem demorar bastante tempo para o completo carregamento na primeira vez
-        </p>
-      </div>
-      <div className="body-container">
-        {loading ? <Load /> : products.map((product) => (
-          <ProductCard
-            key={product.id}
-            data={{
-              name: product.name,
-              imageUrl: product.imageUrl,
-              price: product.price,
-              description: product.description,
-              linkTo: `/products/${product.id}`
-            }}
-          />
-        ))}
-      </div>
+        </Typography>
+      </Box>
+
+      <Container sx={{ py: 4 }}>
+        {loading ? (
+          <Load />
+        ) : (
+          <Grid container spacing={3}>
+            {products.map((product) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
+                <ProductCard
+                  data={{
+                    name: product.name,
+                    imageUrl: product.imageUrl,
+                    price: product.price,
+                    description: product.description,
+                    linkTo: `/products/${product.id}`
+                  }}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        )}
+      </Container>
     </>
   );
 }

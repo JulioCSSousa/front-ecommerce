@@ -1,6 +1,5 @@
 import React from "react";
 import InputMask from "react-input-mask";
-import './CepInput.css'
 
 export default function CepInput() {
     return (

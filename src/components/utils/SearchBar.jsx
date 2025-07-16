@@ -1,54 +1,50 @@
-import { useState } from 'react';
-import './SearchBar.css';
-import { useContext } from 'react';
-import { AppContext } from '../../context/appContext';
+import { useState, useContext } from 'react'
+import { AppContext } from '../../context/appContext'
+import { Box, InputBase, IconButton, Paper } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search'
 
 export default function SearchBar() {
-  const { setValueInput } = useContext(AppContext);
-  const [searchValue, setSearchValue] = useState('');
+  const { setValueInput } = useContext(AppContext)
+  const [searchValue, setSearchValue] = useState('')
 
-  // Função para lidar com a busca
   const handleSearch = (event) => {
-    event.preventDefault(); // Impede o comportamento padrão do formulário
-    setValueInput(searchValue); // Atualiza o valor global da pesquisa
-  };
-
-  // Função para lidar com o pressionamento da tecla Enter
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      setValueInput(searchValue); // Atualiza o valor global da pesquisa
-    }
-  };
+    event.preventDefault()
+    setValueInput(searchValue)
+  }
 
   return (
-    <form onSubmit={handleSearch}>
-      <div className="search-container">
-        <div className="col">
-          <div className="input-group">
-            <input
-              value={searchValue}
-              onChange={({ target }) => setSearchValue(target.value)} // Atualiza o valor do input
-              onKeyDown={handleKeyPress} // Verifica o pressionamento da tecla Enter
-              type="text"
-              id="searchBar"
-              className="form-control"
-              placeholder="O que deseja encontrar?"
-            />
-            <div className="search-btn" >
-             <button
-                className="btn btn-outline-secondary"
-                id="search-btn"
-                type="submit" 
-                style={{ position: 'relative'}}>
-                <i className="fas fa-search"></i>
-            </button>
-          </div>
-          </div>
-          
-          
-        </div>
-      </div>
-    </form>
-  );
+    <Box
+      component="form"
+      onSubmit={handleSearch}
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        mt: 3,
+        px: 2,
+      }}
+    >
+      <Paper
+        component="form"
+        sx={{
+          p: '2px 8px',
+          display: 'flex',
+          alignItems: 'center',
+          width: { xs: '100%', sm: '500px' },
+          borderRadius: 3,
+          boxShadow: 2,
+        }}
+      >
+        <InputBase
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          sx={{ ml: 1, flex: 1 }}
+          placeholder="O que deseja encontrar?"
+          inputProps={{ 'aria-label': 'Buscar' }}
+        />
+        <IconButton type="submit" sx={{ p: '10px' }} aria-label="buscar">
+          <SearchIcon />
+        </IconButton>
+      </Paper>
+    </Box>
+  )
 }

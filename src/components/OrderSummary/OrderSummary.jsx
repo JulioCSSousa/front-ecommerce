@@ -1,145 +1,198 @@
-import { useContext } from "react";
-import { AppContext } from "../../context/appContext";
-import './OrderSummary.css';
-import { FaShoppingCart, FaTrash, FaArrowLeft, FaCreditCard, FaPlus, FaMinus } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useContext } from 'react'
+import { AppContext } from '../../context/appContext'
+import { useNavigate } from 'react-router-dom'
+import {
+  Box,
+  Typography,
+  Button,
+  IconButton,
+  Grid,
+  Paper,
+  Divider,
+} from '@mui/material'
+import {
+  FaArrowLeft,
+  FaCreditCard,
+  FaTrash,
+  FaPlus,
+  FaMinus,
+  FaShoppingCart,
+} from 'react-icons/fa'
 
 export default function OrderSummary() {
-    const { setCartItems, cartItems } = useContext(AppContext);
-    const navigate = useNavigate(); // Inicializando o hook useNavigate
+  const { setCartItems, cartItems } = useContext(AppContext)
+  const navigate = useNavigate()
 
-    const handleRemoveCart = (itemToRemove) => {
-        setCartItems((prevItems) => {
-            return prevItems
-                .map((item) =>
-                    item.name === itemToRemove.name
-                        ? { ...item, quantity: item.quantity - 1 }
-                        : item
-                )
-                .filter((item) => item.quantity > 0);
-        });
-        
-    };
+  const handleRemoveCart = (itemToRemove) => {
+    setCartItems(prevItems =>
+      prevItems
+        .map(item =>
+          item.name === itemToRemove.name
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter(item => item.quantity > 0)
+    )
+  }
 
-    const handleAddCart = (itemToAdd) => {
-        setCartItems((prevItems) => {
-            return prevItems.map((item) =>
-                item.name === itemToAdd.name
-                    ? { ...item, quantity: item.quantity + 1 }
-                    : item
-            );
-        });
-    };
+  const handleAddCart = (itemToAdd) => {
+    setCartItems(prevItems =>
+      prevItems.map(item =>
+        item.name === itemToAdd.name
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
+    )
+  }
 
-    const handleDecreaseCart = (itemToDecrease) => {
-        setCartItems((prevItems) => {
-            return prevItems.map((item) =>
-                item.name === itemToDecrease.name && item.quantity > 1
-                    ? { ...item, quantity: item.quantity - 1 }
-                    : item
-            );
-        });
-    };
-    const handleGoBack = () => {
-        navigate("/"); // Redireciona para a página principal ("/")
-    };
-    const calculateTotalPrice = () => {
-        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-    };
+  const handleDecreaseCart = (itemToDecrease) => {
+    setCartItems(prevItems =>
+      prevItems.map(item =>
+        item.name === itemToDecrease.name && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    )
+  }
 
-    const handleClearCart = () => {
-        setCartItems([]);
-    };
+  const handleClearCart = () => {
+    setCartItems([])
+  }
 
-    return (
-        <div className="order-summary-container">
-            {/* Header */}
-            <div className="order-header">
-                <button className="back-button" onClick={handleGoBack}>
-                    <FaArrowLeft />
-                </button>
-                <h1 className="cart-title">
-                    <FaShoppingCart /> Meu Carrinho
-                </h1>
-                {cartItems.length > 0 && (
-                    <button className="clear-cart-btn" onClick={handleClearCart}>
-                        <FaTrash /> Limpar Carrinho
-                    </button>
-                )}
-            </div>
+  const handleGoBack = () => {
+    navigate('/')
+  }
 
-            {/* Conteúdo Principal */}
-            <div className="order-content">
-                {/* Lista de Itens */}
-                <div className="items-list">
-                    {cartItems.length === 0 ? (
-                        <div className="empty-cart">
-                            <p>Seu carrinho está vazio. 🛒</p>
-                            <button onClick={() => handleGoBack()} className="btn btn-primary">Ver Produtos</button>
-                        </div>
-                    ) : (
-                        cartItems.map((cartItem) => (
-                            <div key={cartItem.id} className="cart-item">
-                                <div className="item-info">
-                                    <img src={cartItem.imageUrl} alt={cartItem.name} className="item-image" />
-                                    <div className="item-details">
-                                        <div className="name">
-                                            <label>{cartItem.name}</label>
-                                        </div>
-                                        <p>Preço: {cartItem.price.toLocaleString("pt-br", {
-                                            style: "currency",
-                                            currency: "BRL",
-                                        })}</p>
-                                    </div>
-                                </div>
+  const calculateTotalPrice = () => {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
+  }
 
-                                {/* Botões de Aumentar/Diminuir */}
-                                <div className="quantity-controls">
-                                    <button
-                                        className="quantity-btn"
-                                        onClick={() => handleDecreaseCart(cartItem)}
-                                    >
-                                        <FaMinus />
-                                    </button>
-                                    <span className="quantity">{cartItem.quantity}</span>
-                                    <button
-                                        className="quantity-btn"
-                                        onClick={() => handleAddCart(cartItem)}
-                                    >
-                                        <FaPlus />
-                                    </button>
-                                </div>
+  return (
+    <Box sx={{ px: { xs: 2, md: 8 }, py: 4 }}>
+      {/* Header */}
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 4 }}>
+        <Button onClick={handleGoBack} startIcon={<FaArrowLeft />}>
+          Voltar
+        </Button>
+        <Typography variant="h5" fontWeight="bold">
+          <FaShoppingCart style={{ marginRight: 8 }} />
+          Meu Carrinho
+        </Typography>
+        {cartItems.length > 0 && (
+          <Button onClick={handleClearCart} color="error" startIcon={<FaTrash />}>
+            Limpar Carrinho
+          </Button>
+        )}
+      </Box>
 
-                                <button className="remove-item-btn" onClick={() => handleRemoveCart(cartItem)}>
-                                    <FaTrash />
-                                </button>
-                            </div>
-                        ))
-                    )}
-                </div>
+      {/* Conteúdo */}
+      {cartItems.length === 0 ? (
+        <Box textAlign="center" sx={{ mt: 8 }}>
+          <Typography variant="h6">Seu carrinho está vazio. 🛒</Typography>
+          <Button
+            variant="contained"
+            sx={{ mt: 2 }}
+            onClick={handleGoBack}
+          >
+            Ver Produtos
+          </Button>
+        </Box>
+      ) : (
+        <Grid container spacing={4}>
+          {/* Lista de Itens */}
+          <Grid item xs={12} md={8}>
+            {cartItems.map(cartItem => (
+              <Paper
+                key={cartItem.id}
+                elevation={2}
+                sx={{
+                  p: 2,
+                  mb: 2,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <img
+                    src={cartItem.imageUrl}
+                    alt={cartItem.name}
+                    style={{ width: 80, height: 80, borderRadius: 8, objectFit: 'cover' }}
+                  />
+                  <Box>
+                    <Typography variant="subtitle1" fontWeight="bold">
+                      {cartItem.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Preço:{' '}
+                      {cartItem.price.toLocaleString('pt-br', {
+                        style: 'currency',
+                        currency: 'BRL'
+                      })}
+                    </Typography>
+                  </Box>
+                </Box>
 
-                {/* Resumo do Pedido */}
-                {cartItems.length > 0 && (
-                    <div className="order-summary-card">
-                        <h2>Resumo do Pedido</h2>
-                        <div className="summary-details">
-                            <p>Subtotal: <span>{calculateTotalPrice().toLocaleString("pt-br", {
-                                style: "currency",
-                                currency: "BRL",
-                            })}</span></p>
-                            <p>Frete: <span>Grátis</span></p>
-                            <hr />
-                            <p className="total-price">Total: <span>{calculateTotalPrice().toLocaleString("pt-br", {
-                                style: "currency",
-                                currency: "BRL",
-                            })}</span></p>
-                        </div>
-                        <button className="btn btn-checkout" onClick={() => navigate("/checkout")}>
-                            <FaCreditCard /> Finalizar Compra
-                        </button>
-                    </div>
-                )}
-            </div>
-        </div>
-    );
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <IconButton onClick={() => handleDecreaseCart(cartItem)}>
+                    <FaMinus />
+                  </IconButton>
+                  <Typography>{cartItem.quantity}</Typography>
+                  <IconButton onClick={() => handleAddCart(cartItem)}>
+                    <FaPlus />
+                  </IconButton>
+                  <IconButton color="error" onClick={() => handleRemoveCart(cartItem)}>
+                    <FaTrash />
+                  </IconButton>
+                </Box>
+              </Paper>
+            ))}
+          </Grid>
+
+          {/* Resumo do Pedido */}
+          <Grid item xs={12} md={4}>
+            <Paper elevation={3} sx={{ p: 3 }}>
+              <Typography variant="h6" fontWeight="bold" gutterBottom>
+                Resumo do Pedido
+              </Typography>
+              <Box sx={{ mb: 1 }}>
+                <Typography>Subtotal:</Typography>
+                <Typography fontWeight="bold">
+                  {calculateTotalPrice().toLocaleString('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL'
+                  })}
+                </Typography>
+              </Box>
+              <Box sx={{ mb: 1 }}>
+                <Typography>Frete:</Typography>
+                <Typography fontWeight="bold">Grátis</Typography>
+              </Box>
+              <Divider sx={{ my: 2 }} />
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  Total:
+                </Typography>
+                <Typography variant="h6" fontWeight="bold">
+                  {calculateTotalPrice().toLocaleString('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL'
+                  })}
+                </Typography>
+              </Box>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                startIcon={<FaCreditCard />}
+                onClick={() => navigate('/checkout')}
+              >
+                Finalizar Compra
+              </Button>
+            </Paper>
+          </Grid>
+        </Grid>
+      )}
+    </Box>
+  )
 }

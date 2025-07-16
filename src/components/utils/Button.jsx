@@ -1,6 +1,5 @@
 
 import PropTypes from 'prop-types';
-import './Button.css'
 import { BsFillCartPlusFill } from "react-icons/bs";
 
 

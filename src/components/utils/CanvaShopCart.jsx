@@ -1,65 +1,71 @@
-import CartItem from './CartItem';
-import { AppContext } from '../../context/appContext';
 import { useContext, useEffect, useState } from 'react';
-import './CanvaShopCart.css'
-import { Link as RouterLink } from 'react-router-dom'
+import { Badge, IconButton, Drawer, Box, Typography, Button, Stack } from '@mui/material';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import { AppContext } from '../../context/appContext';
+import CartItem from './CartItem';
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function CanvaCartShop() {
+  const { cartItems } = useContext(AppContext);
+  const initialIsMobile = window.innerWidth <= 500;
+  const [isMobile, setIsMobile] = useState(initialIsMobile);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
 
-    const { cartItems } = useContext(AppContext);
-    const initialIsMobile = window.innerWidth <= 500;
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 500);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-    const [isMobile, setIsMobile] = useState(initialIsMobile);
+  const toggleDrawer = (open) => () => setDrawerOpen(open);
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth <= 500);
-        };
+  const totalItems = cartItems.reduce((total, item) => total + (item.quantity || 1), 0);
 
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
+  return (
+    <>
+      <Stack direction="row" spacing={1} alignItems="center" className="cart-container">
+        <Badge badgeContent={totalItems} color="secondary" className="cart-span-num">
+          <IconButton onClick={toggleDrawer(true)} color="primary">
+            <ShoppingBagIcon fontSize="large" />
+          </IconButton>
+        </Badge>
 
-    return (
-        <>
-            <div className="cart-container">
-                <div className="cart-span-num">
-                    <span className='spanNum'>{cartItems.reduce((total, item) => total + (item.quantity || 1), 0)}</span>
-                </div>
-                <button className="btn p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" className="bi bi-bag-heart" viewBox="0 0 16 16">
-                        <path fillRule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0M14 14V5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1M8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132" />
-                    </svg>
-                </button>
-                {!isMobile && (
-                    <div className="label-cart">
-                        <label htmlFor="">Carrinho</label>
-                    </div>
-                )}
-            </div>
-            <div className="offcanvas offcanvas-end" tabIndex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
-                <div className="offcanvas-header">
-                    <h5 className="offcanvas-title" id="cartOffcanvasLabel">Carrinho</h5>
-                    <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div className="item-content">
-                    {cartItems.length === 0 ? (
-                        <label>Seu carrinho está vazio.</label>
-                    ) : (
-                        cartItems.map((cartItem) => (
-                            <CartItem key={cartItem.name} data={cartItem} />
-                        ))
-                    )}
-                </div>
-                <RouterLink component={RouterLink} to={'/OrderSummary'}>
-                    <div className="canv-buy-btn">
-                        <button className="btn btn-dark">Comprar</button>
-                    </div>  
-                </RouterLink>
-            </div>
+        {!isMobile && (
+          <Typography variant="body1" className="label-cart">
+            Carrinho
+          </Typography>
+        )}
+      </Stack>
 
-        </>
-    )
+      <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer(false)}>
+        <Box sx={{ width: isMobile ? 300 : 400, p: 2 }}>
+          <Typography variant="h6" gutterBottom>
+            Carrinho
+          </Typography>
+
+          <Box className="item-content" sx={{ mb: 3 }}>
+            {cartItems.length === 0 ? (
+              <Typography>Seu carrinho está vazio.</Typography>
+            ) : (
+              cartItems.map((cartItem) => (
+                <CartItem key={cartItem.name} data={cartItem} />
+              ))
+            )}
+          </Box>
+
+          <Button
+            fullWidth
+            variant="contained"
+            component={RouterLink}
+            to="/OrderSummary"
+            onClick={toggleDrawer(false)}
+          >
+            Comprar
+          </Button>
+        </Box>
+      </Drawer>
+    </>
+  );
 }
